@@ -1,5 +1,5 @@
 from config import PROFIREADER_URL, WINDOW_SIZE
-from ..email import SendEmail
+from utils.email import SendEmail
 from ..site_parts.log_in import Log_in
 from ..site_parts.header import Header
 from ..site_parts.log_out import Log_out
