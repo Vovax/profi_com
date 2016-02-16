@@ -10,7 +10,10 @@ class GeneralPart(object):
         self.get_division_xpath_header = self.division_xpath_header()
         self.get_division_xpath_drop_menu = self.division_xpath_drop_menu()
         self.get_division_xpath_my_profile = self.division_xpath_my_profile()
-
+        self.get_division_xpath_login_by_google = self.division_xpath_login_by_google()
+        self.get_division_xpath_login_by_facebook = self.division_xpath_login_by_facebook()
+        self.get_division_xpath_login_by_linkedin = self.division_xpath_login_by_linkedin()
+        self.get_division_xpath_login_by_microsoft = self.division_xpath_login_by_microsoft()
 
 
     def get_testing_page(self, elem_number=0):
@@ -29,7 +32,7 @@ class GeneralPart(object):
     @staticmethod
     def division_xpath_header():
         return "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/div\
-        [@class='collapse navbar-collapse']/ul[@class='top-menu']/li/a[@class='ng-binding']/href"
+        [@class='container-fluid']/div[@class='collapse navbar-collapse']/ul[@class='top-menu']/a[@class='read_btn']"
 
 
     @staticmethod
@@ -66,3 +69,23 @@ class GeneralPart(object):
         return "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/\
         div[@class='container-fluid']/div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav navbar-right']/\
         li[@class='dropdown']/ul/li[@class='dropdown open']/ul[@class='dropdown-menu']/li/a[text()='Log Out']"
+
+    @staticmethod
+    def division_xpath_login_by_google():
+        return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
+        [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/a[@class='login-by login-by-google']"
+
+    @staticmethod
+    def division_xpath_login_by_facebook():
+        return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
+        [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/a[@class='login-by login-by-facebook']"
+
+    @staticmethod
+    def division_xpath_login_by_linkedin():
+        return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
+        [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/a[@class='login-by login-by-linkedin']"
+    @staticmethod
+    def division_xpath_login_by_microsoft():
+        return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
+        [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/\
+        a[@class='login-by login-by-microsoft']"

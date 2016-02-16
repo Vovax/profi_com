@@ -37,6 +37,8 @@ class Header(GeneralPart):
                 count += 1
                 hrefs[0].click()
                 time.sleep(2)
+
+
                 # if '_c' not in self.driver.current_url and \
                 #         self.driver.find_elements_by_xpath(
                 #             "//div[@class='col-md-9']/div[@class='block-item list-elements']"):

@@ -5,10 +5,14 @@ import time
 
 class Log_in (GeneralPart):
 
-    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL):
+    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_name=config.LOG_IN['name'],
+                 user_mail=config.LOG_IN['mail'], user_pass=config.LOG_IN['pass']):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
+        self.user_name = user_name
+        self.user_mail = user_mail
+        self.user_pass = user_pass
 
     def __call__(self, *args, **kwargs):
         self.test_log_in()
@@ -29,10 +33,13 @@ class Log_in (GeneralPart):
         login_tag[0].click()
         time.sleep(2)
         username = self.driver.find_element_by_name('email')
-        username.send_keys('bravegirlua@yahoo.com')
+        username.send_keys(self.user_mail)
         time.sleep(2)
         password = self.driver.find_element_by_name('password')
-        password.send_keys('!')
+        password.send_keys(self.user_pass)
         time.sleep(2)
         form = self.driver.find_element_by_id('submit_login')
         form.submit()
+
+        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
+            'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)

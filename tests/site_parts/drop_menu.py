@@ -20,5 +20,5 @@ class Drop_menu (GeneralPart):
     def test_drop_menu(self):
         drop_menu = self.driver.find_elements_by_xpath(self.get_division_xpath_drop_menu)
         drop_menu[0].click()
-        time.sleep(5)
+        time.sleep(2)
 
