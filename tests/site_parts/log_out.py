@@ -19,7 +19,7 @@ class Log_out (GeneralPart):
 
     def test_log_out(self):
         self.click_my_profile_or_logout(profile_or_logout='logout')
-        time.sleep(2)
+        time.sleep(3)
         # print(self.get_division_xpath_log_out)
         # logout_tag = self.driver.find_element_by_xpath(self.get_division_xpath_log_out).click()
         # print(logout_tag)
