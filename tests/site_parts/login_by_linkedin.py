@@ -31,7 +31,7 @@ class Login_by_linkedin(GeneralPart):
 
         username = self.driver.find_element_by_name('session_key')
         username.send_keys(self.user_email)
-        password = self.driver.find_element_by_name('session_password')
+        password = self.driver.find_element_by_id('session_password-oauth2SAuthorizeForm')
         password.send_keys(self.user_password)
         form = self.driver.find_element_by_name('authorize')
         form.submit()

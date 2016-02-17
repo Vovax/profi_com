@@ -14,6 +14,7 @@ class GeneralPart(object):
         self.get_division_xpath_login_by_facebook = self.division_xpath_login_by_facebook()
         self.get_division_xpath_login_by_linkedin = self.division_xpath_login_by_linkedin()
         self.get_division_xpath_login_by_microsoft = self.division_xpath_login_by_microsoft()
+        self.get_division_xpath_logination = self.division_xpath_logination()
 
 
     def get_testing_page(self, elem_number=0):
@@ -30,17 +31,22 @@ class GeneralPart(object):
 
 
     @staticmethod
+    def division_xpath_log_in():
+        return "//div[@class='container']/div[@class='container-fluid']/div[@class='collapse navbar-collapse']/\
+        ul[@class='nav navbar-nav navbar-right']//ul[@class='user-auth']/li/a[@class='ng-binding']"
+
+
+    @staticmethod
+    def division_xpath_logination():
+        return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
+        [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/a"
+
+
+    @staticmethod
     def division_xpath_header():
         return "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/div\
         [@class='container-fluid']/div[@class='collapse navbar-collapse']/ul[@class='top-menu']/a[@class='read_btn']"
 
-
-    @staticmethod
-    def division_xpath_log_in():
-        return "//div[@class='container']/div[@class='container-fluid']/div[@class='collapse navbar-collapse']/\
-        ul[@class='nav navbar-nav navbar-right']//ul[@class='user-auth']/li/a[@class='ng-binding']"
-        # return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div[@class='content-block']/\
-        #         div[@class='ng-scope']/form[@class='ng-pristine ng-valid']/input[@id='email']"
 
     @staticmethod
     def division_xpath_drop_menu():

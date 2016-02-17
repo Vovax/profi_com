@@ -22,3 +22,5 @@ class Drop_menu (GeneralPart):
         drop_menu[0].click()
         time.sleep(3)
 
+        # assert 'Profile' in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text, \
+        # 'Can"t find My Profile, in {page}'.format(page=self.driver.current_url)

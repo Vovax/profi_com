@@ -9,11 +9,12 @@ from ..site_parts.login_by_google import Login_by_google
 from ..site_parts.login_by_facebook import Login_by_facebook
 from ..site_parts.login_by_linkedin import Login_by_linkedin
 from ..site_parts.login_by_microsoft import Login_by_microsoft
+from ..site_parts.logination import Logination
 
 
 class General(object):
 
-    dependences = ('log_in', 'drop_menu', 'my_profile', 'log_out', 'login_by_google', 'login_by_facebook',
+    dependences = ('logination', 'log_in', 'drop_menu', 'my_profile', 'log_out', 'login_by_google', 'login_by_facebook',
                    'login_by_linkedin', 'login_by_microsoft', 'header')
 
     def __init__(self, dependences=dependences, driver=None, device='PC', testing_page=PROFIREADER_URL):
@@ -31,8 +32,11 @@ class General(object):
         self.driver.implicitly_wait(3)
 
     def call_dependences(self, dependences):
-        classes = (Login_by_google, Drop_menu, Log_out, Login_by_facebook, Drop_menu, Log_out, Login_by_linkedin,
-                   Drop_menu, Log_out, Login_by_microsoft, Drop_menu, Log_out, Log_in, Drop_menu, My_profile,
-                   Header, Log_out)
+        classes = (Logination, Log_in)
+
+
+# (Login_by_google, Drop_menu, Log_out, Login_by_facebook, Drop_menu, Log_out, Login_by_linkedin,
+#                    Drop_menu, Log_out, Login_by_microsoft, Drop_menu, Log_out, Log_in, Drop_menu, My_profile,
+#                    Header, Log_out)
         [a() for a in map(lambda cls: cls(driver=self.driver),
                           filter(lambda cls: cls.__repr__() in dependences, classes))]
