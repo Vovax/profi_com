@@ -1,5 +1,4 @@
 from .general_part import GeneralPart
-import random as rand
 import config
 import time
 
@@ -16,17 +15,19 @@ class Logination(GeneralPart):
         self.user_password = user_password
 
     def __call__(self, *args, **kwargs):
-        self.test_logination(random=False)
+        self.test_logination()
 
     @classmethod
     def __repr__(cls):
         return 'logination'
 
 
-    def test_logination(self, random=False):
+    def test_logination(self):
 
         # GOOGLE
+        # print(self.get_division_xpath_log_in)
         self.driver.find_elements_by_xpath(self.get_division_xpath_log_in)[0].click()
+        print(self.get_division_xpath_login_by_google)
         google_login = self.driver.find_elements_by_xpath(self.get_division_xpath_login_by_google)
         google_login[0].click()
         time.sleep(2)
@@ -42,8 +43,6 @@ class Logination(GeneralPart):
         assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
-        self.driver.find_elements_by_xpath(self.get_division_xpath_drop_menu)[0].click()
-        time.sleep(3)
         self.click_my_profile_or_logout(profile_or_logout='logout')
         time.sleep(3)
 
@@ -62,8 +61,6 @@ class Logination(GeneralPart):
         assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
-        self.driver.find_elements_by_xpath(self.get_division_xpath_drop_menu)[0].click()
-        time.sleep(3)
         self.click_my_profile_or_logout(profile_or_logout='logout')
         time.sleep(3)
 
@@ -78,12 +75,11 @@ class Logination(GeneralPart):
         password.send_keys(self.user_password)
         form = self.driver.find_element_by_name('authorize')
         form.submit()
+        time.sleep(3)
 
         assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
-        self.driver.find_elements_by_xpath(self.get_division_xpath_drop_menu)[0].click()
-        time.sleep(3)
         self.click_my_profile_or_logout(profile_or_logout='logout')
         time.sleep(3)
 
@@ -101,9 +97,6 @@ class Logination(GeneralPart):
 
         assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
-
-        self.driver.find_elements_by_xpath(self.get_division_xpath_drop_menu)[0].click()
-        time.sleep(3)
 
         self.click_my_profile_or_logout(profile_or_logout='logout')
         time.sleep(3)

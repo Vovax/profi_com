@@ -4,6 +4,7 @@ from utils.email import SendEmail
 from tests.pages.division import Division
 import config
 from selenium.webdriver import Firefox
+from tests.pages.loged_in_user import Loged_in_user
 
 parser = argparse.ArgumentParser(description='Test for profireader')
 parser.add_argument("site")
@@ -19,6 +20,7 @@ def start_test(device):
     try:
         IndexPage(device=device, driver=driver)
         Division(device=device, driver=driver)
+        Loged_in_user(device=device, driver=driver)
     except AssertionError as e:
         send_email(exception=e)
 
