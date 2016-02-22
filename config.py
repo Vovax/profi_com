@@ -1,4 +1,8 @@
 import secret_data
+import psycopg2
+import sys
+
+
 
 PROFIREADER_URL = 'http://profireader.com'
 WINDOW_SIZE = dict(PC=(1920, 1080),
@@ -14,8 +18,12 @@ USER = {'name': secret_data.PROFI_USER_NAME,
         'mail': secret_data.PROFI_USER_MAIL,
         'pass': secret_data.PROFI_USER_PASSWORD}
 
-
-
 # PROFIREADER_NAME = secret_data.PROFI_USER_NAME
 # PROFIREADER_MAIL = secret_data.PROFI_USER_MAIL
 # PROFIREADER_PASSWORD = secret_data.PROFI_USER_PASSWORD
+
+def  db_connect():
+    db_con = psycopg2.connect(database='profireader_tests', user='pfuser', password='bAnach~tArski', host='db.profi')
+    print("Opened database successfully")
+    cur = db_con.cursor()
+
