@@ -1,18 +1,24 @@
 from .general_part import GeneralPart
 import config
 import time
+from utils.db_init import db_con, cur
+
 
 
 class Logination(GeneralPart):
 
-    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_name=config.USER['name'],
-                 user_email=config.USER['mail'], user_password=config.USER['pass']):
+    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_name=config.USER['name']):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
         self.user_name = user_name
-        self.user_email = user_email
-        self.user_password = user_password
+        cur.execute("SELECT data FROM test_data WHERE test_name='Logination'; ")
+        elem = cur.fetchone()[0]
+        print(elem.get('user_pass'))
+        print(elem.get('user_mail'))
+        self.user_email = elem.get('user_mail')
+        self.user_password = elem.get('user_pass')
+
 
     def __call__(self, *args, **kwargs):
         self.test_logination()
@@ -26,9 +32,11 @@ class Logination(GeneralPart):
 
         # GOOGLE
         # print(self.get_division_xpath_log_in)
-        self.driver.find_elements_by_xpath(self.get_division_xpath_log_in)[0].click()
+        self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
         print(self.get_division_xpath_login_by_google)
-        google_login = self.driver.find_elements_by_xpath(self.get_division_xpath_login_by_google)
+
+        google_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_google)
+
         google_login[0].click()
         time.sleep(2)
         useremail = self.driver.find_element_by_name('Email')
@@ -47,8 +55,8 @@ class Logination(GeneralPart):
         time.sleep(3)
 
         # FACEBOOK
-        self.driver.find_elements_by_xpath(self.get_division_xpath_log_in)[0].click()
-        facebook_login = self.driver.find_elements_by_xpath(self.get_division_xpath_login_by_facebook)
+        self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
+        facebook_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_facebook)
         facebook_login[0].click()
         time.sleep(2)
         username = self.driver.find_element_by_name('email')
@@ -65,8 +73,8 @@ class Logination(GeneralPart):
         time.sleep(3)
 
         # LINKEDIN
-        self.driver.find_elements_by_xpath(self.get_division_xpath_log_in)[0].click()
-        linkedin_login = self.driver.find_elements_by_xpath(self.get_division_xpath_login_by_linkedin)
+        self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
+        linkedin_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_linkedin)
         linkedin_login[0].click()
         time.sleep(2)
         username = self.driver.find_element_by_name('session_key')
@@ -84,8 +92,8 @@ class Logination(GeneralPart):
         time.sleep(3)
 
         # MICROSOFT
-        self.driver.find_elements_by_xpath(self.get_division_xpath_log_in)[0].click()
-        microsoft_login = self.driver.find_elements_by_xpath(self.get_division_xpath_login_by_microsoft)
+        self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
+        microsoft_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_microsoft)
         microsoft_login[0].click()
         time.sleep(2)
         username = self.driver.find_element_by_name('loginfmt')

@@ -32,8 +32,7 @@ class GeneralPart(object):
 
     @staticmethod
     def division_xpath_log_in():
-        return "//div[@class='container']/div[@class='row']/div[@class='col-lg-8 col-md-8 col-sm-8 col-xs-12 menu-site']/\
-        div[@id='bs-example-navbar-collapse-1']/ul/li[@class='menu-profile']/a[@class='login-profile']"
+        return "*[pr_test='LogIn']"
 
 
     @staticmethod
@@ -50,7 +49,8 @@ class GeneralPart(object):
 
     @staticmethod
     def division_xpath_drop_menu():
-        return "//div[@class='container']/div[@class='row']/div[@class='col-lg-8 col-md-8 col-sm-8 col-xs-12 menu-site']/\
+        return "//div[@class='container']/div[@class='row']/\
+        div[@class='col-lg-offset-2 col-md-offset-1 col-lg-6 col-md-7 col-sm-8 col-xs-12 menu-site']/\
         div[@id='bs-example-navbar-collapse-1']/ul/li[@class='menu-profile']/a[@class='ng-binding']"
 
     @staticmethod
@@ -60,41 +60,31 @@ class GeneralPart(object):
         li[@class='dropdown']/ul/li[@class='dropdown open']/ul[@class='dropdown-menu']/li/a[@class='ng-binding']"
 
     def click_my_profile_or_logout(self, profile_or_logout='profile'):
-        # self.driver.get(self.driver.find_element_by_xpath(self.division_xpath_drop_menu).href)
         href_click = None
-        for href in self.driver.find_elements_by_xpath(
-            "//div[@class='container']/div[@class='row']/div[@class='col-lg-8 col-md-8 col-sm-8 col-xs-12 menu-site']/\
-        div[@id='bs-example-navbar-collapse-1']/ul/li[@class='menu-profile']/a[@class='login-profile']"):
+        for href in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):
             if profile_or_logout in href.get_attribute('href'):
                 href_click = href
         href_click.click()
 
     @staticmethod
     def division_xpath_log_out():
-        return "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/\
-        div[@class='container-fluid']/div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav navbar-right']/\
-        li[@class='dropdown']/ul/li[@class='dropdown open']/ul[@class='dropdown-menu']/li/a[text()='Log Out']"
+        return "*[pr_test='LogOut']"
 
     @staticmethod
     def division_xpath_login_by_google():
-        return "//div[@class='container-fluid widewrapper']/div[@class='auth-input auth-form col-lg-4 col-md-4 col-sm-5 " \
-               "col-xs-12 ng-scope']/div[@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/" \
-               "a[@class='login-by login-by-google']"
+        return "*[pr_test='GoogleLogin']"
+
 
     @staticmethod
     def division_xpath_login_by_facebook():
-        return "//div[@class='container-fluid widewrapper']/div[@class='auth-input auth-form col-lg-4 col-md-4 col-sm-5 " \
-               "col-xs-12 ng-scope']/div[@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/" \
-               "a[@class='login-by login-by-facebook']"
+        return "*[pr_test='FacebookLogin']"
+
 
     @staticmethod
     def division_xpath_login_by_linkedin():
-        return "//div[@class='container-fluid widewrapper']/div[@class='auth-input auth-form col-lg-4 col-md-4 col-sm-5 " \
-               "col-xs-12 ng-scope']/div[@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/" \
-               "a[@class='login-by login-by-linkedin']"
+        return "*[pr_test='LinkedinLogin']"
+
 
     @staticmethod
     def division_xpath_login_by_microsoft():
-        return "//div[@class='container-fluid widewrapper']/div[@class='auth-input auth-form col-lg-4 col-md-4 col-sm-5 " \
-               "col-xs-12 ng-scope']/div[@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/" \
-               "a[@class='login-by login-by-microsoft']"
+        return "*[pr_test='MicrosoftLogin']"
