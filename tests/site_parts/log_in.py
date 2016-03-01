@@ -14,10 +14,10 @@ class Log_in (GeneralPart):
         self.user_name = user_name
         cur.execute("SELECT data FROM test_data WHERE test_name='LogedIn'; ")
         elem = cur.fetchone()[0]
-        print(elem.get('password'))
-        print(elem.get('email'))
-        self.user_email = elem.get('email')
-        self.user_password = elem.get('password')
+        # print(elem.get('user_pass'))
+        # print(elem.get('user_mail'))
+        self.user_email = elem.get('user_mail')
+        self.user_password = elem.get('user_pass')
 
 
     def __call__(self, *args, **kwargs):

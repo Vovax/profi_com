@@ -14,8 +14,8 @@ class Logination(GeneralPart):
         self.user_name = user_name
         cur.execute("SELECT data FROM test_data WHERE test_name='Logination'; ")
         elem = cur.fetchone()[0]
-        print(elem.get('user_pass'))
-        print(elem.get('user_mail'))
+        # print(elem.get('user_pass'))
+        # print(elem.get('user_mail'))
         self.user_email = elem.get('user_mail')
         self.user_password = elem.get('user_pass')
 
@@ -33,10 +33,8 @@ class Logination(GeneralPart):
         # GOOGLE
         # print(self.get_division_xpath_log_in)
         self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
-        print(self.get_division_xpath_login_by_google)
-
+        # print(self.get_division_xpath_login_by_google)
         google_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_google)
-
         google_login[0].click()
         time.sleep(2)
         useremail = self.driver.find_element_by_name('Email')

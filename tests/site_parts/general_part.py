@@ -15,6 +15,8 @@ class GeneralPart(object):
         self.get_division_xpath_login_by_linkedin = self.division_xpath_login_by_linkedin()
         self.get_division_xpath_login_by_microsoft = self.division_xpath_login_by_microsoft()
         self.get_division_xpath_logination = self.division_xpath_logination()
+        self.get_division_xpath_subscriptions = self.division_xpath_subscriptions()
+        self.get_division_xpath_readline = self.division_xpath_readline()
 
 
     def get_testing_page(self, elem_number=0):
@@ -88,3 +90,15 @@ class GeneralPart(object):
     @staticmethod
     def division_xpath_login_by_microsoft():
         return "*[pr_test='MicrosoftLogin']"
+
+    @staticmethod
+    def division_xpath_readline():
+        return "*[pr_test='ReadLine']"
+
+    @staticmethod
+    def division_xpath_subscriptions():
+        return "*[pr_test='UserSubscriptions']"
+
+
+
+
