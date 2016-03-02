@@ -15,9 +15,10 @@ class Subscriptions(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_subscriptions()
-        self.getfields()
+        # self.getfields()
         # self.fieldid()
         # self.result()
+        self.get_title()
 
 
     @classmethod
@@ -28,26 +29,31 @@ class Subscriptions(GeneralPart):
         self.driver.find_elements_by_css_selector(self.get_division_xpath_readline)[0].click()
         self.driver.find_elements_by_css_selector(self.get_division_xpath_subscriptions)[0].click()
 
-    def getfields(self, **kwarg):
-        d_ids = set()
-        for item in self.driver.find_elements_by_css_selector("*[pr-test='Grid']"):
-            d_ids.update({item.get_attribute("pr-id")})
-        # print(d_ids)
-        self.result(d_ids)
+    # def getfields(self, **kwarg):
+    #     d_ids = set()
+    #     for item in self.driver.find_elements_by_css_selector("*[pr-test='Grid']"):
+    #         d_ids.update({item.get_attribute("pr-id")})
+    #     # print(d_ids)
+    #     self.result(d_ids)
+    #
+    # # def fieldid(self, elem_number=0, **kwarg):
+    # #     get_id = self.driver.find_elements_by_css_selector("*[pr-test='Grid']")[elem_number].get_attribute("pr-id")
+    # #     self.result(get_id)
+    # #     print('fadsfasfa')
+    #
+    # def result(self, d_ids):
+    #     for i in d_ids:
+    #         print(i)
+    #         cur.execute(""" INSERT INTO test_data(test_name, result) VALUES ('Subscriptions','{"field": "%s"}');""" % i)
+    #     self.db_con = db_con
+    #     db_con.commit()
 
-    # def fieldid(self, elem_number=0, **kwarg):
-    #     get_id = self.driver.find_elements_by_css_selector("*[pr-test='Grid']")[elem_number].get_attribute("pr-id")
-    #     self.result(get_id)
-    #     print('fadsfasfa')
-
-    def result(self, d_ids):
-        for i in d_ids:
-            print(i)
-            cur.execute(""" INSERT INTO test_data(test_name, result) VALUES ('Subscriptions','{"field": "%s"}');""" % i)
-        self.db_con = db_con
-        db_con.commit()
-
-    assert 
+    def get_title(self, elem=0):
+        for company in self.driver.find_elements_by_css_selector("*[pr-test='Grid']"):
+            print(company.text)
+            title = company.get_attribute("title")
+            print(title)
+        # assert title in
 
 
 
