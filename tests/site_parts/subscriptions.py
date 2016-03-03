@@ -19,6 +19,7 @@ class Subscriptions(GeneralPart):
         # self.fieldid()
         # self.result()
         self.get_title()
+        # self.scroll()
 
 
     @classmethod
@@ -49,15 +50,62 @@ class Subscriptions(GeneralPart):
     #     db_con.commit()
 
     def get_title(self, elem=0):
-        for company in self.driver.find_elements_by_css_selector("*[pr-test='Grid']"):
-            print(company.text)
-            title = company.get_attribute("title")
-            print(title)
-        # assert title in
+        title = self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']")
+        # print(title)
+        title[elem].get_attribute("title")
+        # print(title)
+        self.driver.find_elements_by_css_selector(self.get_division_xpath_readline)[0].click()
+
+        # for article in self.driver.find_elements_by_css_selector("*[pr-test='ArticlePortal']"):
+        #     # self.driver.execute_script("window.scrollTo(0, 10000);")
+        #     # time.sleep(5)
+        #     # self.driver.execute_script("window.scrollTo(0, 10000);")
+        #     pi = article.get_attribute("text")
+        #     print(pi)
+
+    # def scroll(self):
+    #     page_height = 0
+    #     scroll_height_script = " return window.innerHeight + window.scrollY "
+    #     self.driver.execute_script("window.scrollTo(0, 1000);")
+    #     while page_height != self.driver.execute_script(scroll_height_script):
+    #         page_height = self.driver.execute_script(scroll_height_script)
+    #         print(page_height)
+    #         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    #         time.sleep(3)
+
+
+        a_length = 1
+        count = 0
+        while count < a_length:
+            # print('ewrwrwer')
+            article = self.driver.find_elements_by_css_selector("*[pr-test='ArticlePortal']")[count:]
+            a_length = len(article) if count == 0 else a_length
+            # print(article[0].text)
+            # print('qrtret')
+            count += 1
+
+        while True:
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            # time.sleep(1)
+            # self.driver.execute_script("window.scrollTo(0, 0);")
+
+        #     self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        #     scroll = self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        #     if count < a_length:
+        #         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        #         count += 1
+        #         time.sleep(1)
+        # p = self.driver.find_elements_by_css_selector("*[pr-test='ArticlePortal']")[0].text
+        # print(p)
 
 
 
 
+
+        # for company in self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']"):
+        #     title = company.get_attribute("title")
+        #     print(title)
+        #     break
 
         # id = self.driver.find_elements_by_xpath
 

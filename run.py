@@ -5,6 +5,7 @@ from tests.pages.division import Division
 import config
 from selenium.webdriver import Firefox
 from tests.pages.loged_in_user import Loged_in_user
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 parser = argparse.ArgumentParser(description='Test for profireader')
 parser.add_argument("site")
@@ -15,7 +16,7 @@ args = parser.parse_args()
 def start_test(device):
     send_email = SendEmail().send_email
     testing_page = config.PROFIREADER_URL
-    driver = Firefox()
+    driver = Firefox(capabilities=DesiredCapabilities.FIREFOX)
 
     try:
         IndexPage(device=device, driver=driver)
