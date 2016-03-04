@@ -11,7 +11,7 @@ class Log_in (GeneralPart):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
-        self.user_name = user_name
+        # self.user_name = user_name
         cur.execute("SELECT data FROM test_data WHERE test_name='LogedIn'; ")
         elem = cur.fetchone()[0]
         # print(elem.get('user_pass'))
@@ -28,14 +28,8 @@ class Log_in (GeneralPart):
         return 'log_in'
 
     def test_log_in(self):
-        # print(self.get_division_xpath_log_in)
-        # login_tag.send_keys(Keys.RETURN)
-            # a_length = 1
-            # count = 0
+
         login_tag = self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)
-            # a_length = len(login_tag) if count == 0 else a_length
-            # print(login_tag)
-            # count += 1
         login_tag[0].click()
         time.sleep(2)
         username = self.driver.find_element_by_name('email')
@@ -47,5 +41,11 @@ class Log_in (GeneralPart):
         form = self.driver.find_element_by_id('submit_login')
         form.submit()
 
-        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
-            'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
+        logedIn = self.driver.find_elements_by_css_selector("*[pr_test='LogOut']")[0].text
+        # print(logedIn)
+
+        assert 'Log out' == logedIn, "Can't Log In"
+
+        # assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
+        #     'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
+

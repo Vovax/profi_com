@@ -4,11 +4,13 @@ from ..site_parts.log_in import Log_in
 from ..site_parts.logination import Logination
 # from tests.pages.loged_in_user import Loged_in_user
 from ..site_parts.subscriptions import Subscriptions
+from ..site_parts.news import News
+from ..site_parts.my_profile import My_profile
 
 
 class General(object):
 
-    dependences = ('logination', 'log_in', 'subscriptions', 'loged_in_user', 'header')
+    dependences = ('logination', 'log_in', 'my_profile', 'subscriptions', 'news', 'loged_in_user', 'header')
 
     def __init__(self, dependences=dependences, driver=None, device='PC', testing_page=PROFIREADER_URL):
         # print('general')
@@ -25,7 +27,7 @@ class General(object):
         self.driver.implicitly_wait(3)
 
     def call_dependences(self, dependences):
-        classes = (Log_in, Subscriptions)
+        classes = (Log_in, My_profile, Subscriptions, News)
 
         [a() for a in map(lambda cls: cls(driver=self.driver),
                           filter(lambda cls: cls.__repr__() in dependences, classes))]

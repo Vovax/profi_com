@@ -57,16 +57,14 @@ class GeneralPart(object):
 
     @staticmethod
     def division_xpath_my_profile():
-        return "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/\
-        div[@class='container-fluid']/div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav navbar-right']/\
-        li[@class='dropdown']/ul/li[@class='dropdown open']/ul[@class='dropdown-menu']/li/a[@class='ng-binding']"
+        return "*[pr_test='UserProfile']"
 
-    def click_my_profile_or_logout(self, profile_or_logout='profile'):
-        href_click = None
-        for href in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):
-            if profile_or_logout in href.get_attribute('href'):
-                href_click = href
-        href_click.click()
+    # def click_my_profile_or_logout(self, profile_or_logout='profile'):
+    #     href_click = None
+    #     for href in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):
+    #         if profile_or_logout in href.get_attribute('href'):
+    #             href_click = href
+    #     href_click.click()
 
     @staticmethod
     def division_xpath_log_out():

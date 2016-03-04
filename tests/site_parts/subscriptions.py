@@ -1,4 +1,3 @@
-import random as rand
 from .general_part import GeneralPart
 import config
 import time
@@ -18,8 +17,7 @@ class Subscriptions(GeneralPart):
         # self.getfields()
         # self.fieldid()
         # self.result()
-        self.get_title()
-        # self.scroll()
+        # self.get_title()
 
 
     @classmethod
@@ -49,12 +47,18 @@ class Subscriptions(GeneralPart):
     #     self.db_con = db_con
     #     db_con.commit()
 
-    def get_title(self, elem=0):
-        title = self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']")
-        # print(title)
-        title[elem].get_attribute("title")
-        # print(title)
-        self.driver.find_elements_by_css_selector(self.get_division_xpath_readline)[0].click()
+    # def get_title(self, elem=0):
+    #     title = self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']")
+    #     # print(title)
+    #     title[elem].get_attribute("title")
+    #     # print(title)
+
+
+
+
+
+
+
 
         # for article in self.driver.find_elements_by_css_selector("*[pr-test='ArticlePortal']"):
         #     # self.driver.execute_script("window.scrollTo(0, 10000);")
@@ -73,20 +77,9 @@ class Subscriptions(GeneralPart):
     #         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     #         time.sleep(3)
 
-
-        a_length = 1
-        count = 0
-        while count < a_length:
-            # print('ewrwrwer')
-            article = self.driver.find_elements_by_css_selector("*[pr-test='ArticlePortal']")[count:]
-            a_length = len(article) if count == 0 else a_length
-            # print(article[0].text)
-            # print('qrtret')
-            count += 1
-
-        while True:
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            # time.sleep(1)
+        # while True:
+        #     self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        #     time.sleep(5)
             # self.driver.execute_script("window.scrollTo(0, 0);")
 
         #     self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
