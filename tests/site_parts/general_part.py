@@ -17,6 +17,7 @@ class GeneralPart(object):
         self.get_division_xpath_logination = self.division_xpath_logination()
         self.get_division_xpath_subscriptions = self.division_xpath_subscriptions()
         self.get_division_xpath_readline = self.division_xpath_readline()
+        self.get_division_xpath_help_page = self.division_xpath_help_page()
 
 
     def get_testing_page(self, elem_number=0):
@@ -96,6 +97,10 @@ class GeneralPart(object):
     @staticmethod
     def division_xpath_subscriptions():
         return "*[pr_test='UserSubscriptions']"
+
+    @staticmethod
+    def division_xpath_help_page():
+        return "*[pr_test='UserInfo']"
 
 
 

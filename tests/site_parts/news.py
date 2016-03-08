@@ -33,7 +33,7 @@ class News(GeneralPart):
 
         while True:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(5)
+            time.sleep(10)
             new_Height = self.driver.execute_script("return document.body.scrollHeight")
             if old_pos != new_Height:
                 old_pos = new_Height
@@ -54,7 +54,7 @@ class News(GeneralPart):
             a_length = len(article) if count == 0 else a_length
             news_article = article[elem].get_attribute("text")
             # print(news_article)
-            # print(subs_article)
+            print(subs_article)
             count += 1
 
             assert news_article == subs_article, 'Portal Name {subs_article} from "Subsciptions" does not equal to ' \

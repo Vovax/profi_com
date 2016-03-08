@@ -38,7 +38,7 @@ class Log_in (GeneralPart):
         password = self.driver.find_element_by_name('password')
         password.send_keys(self.user_password)
         time.sleep(2)
-        form = self.driver.find_element_by_id('submit_login')
+        form = self.driver.find_element_by_class_name('submit-form')
         form.submit()
 
         logedIn = self.driver.find_elements_by_css_selector("*[pr_test='LogOut']")[0].text
