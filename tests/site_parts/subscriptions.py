@@ -14,7 +14,7 @@ class Subscriptions(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_subscriptions()
-        # self.getfields()
+        self.getfields()
         # self.fieldid()
         # self.result()
         # self.get_title()
@@ -28,30 +28,31 @@ class Subscriptions(GeneralPart):
         self.driver.find_elements_by_css_selector(self.get_division_xpath_readline)[0].click()
         self.driver.find_elements_by_css_selector(self.get_division_xpath_subscriptions)[0].click()
 
-    # def getfields(self, **kwarg):
-    #     d_ids = set()
-    #     for item in self.driver.find_elements_by_css_selector("*[pr-test='Grid']"):
-    #         d_ids.update({item.get_attribute("pr-id")})
-    #     # print(d_ids)
+    def getfields(self, **kwarg):
+        get_ids = set()
+        for item in self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']"):
+            get_ids.update({item.get_attribute("pr-id")})
+        print(get_ids)
+        self.result(get_ids)
+
+    # def fieldid(self, elem_number=0, **kwarg):
+    #     d_ids = self.driver.find_elements_by_css_selector("*[pr-test='Grid']")[elem_number].get_attribute("pr-id")
     #     self.result(d_ids)
-    #
-    # # def fieldid(self, elem_number=0, **kwarg):
-    # #     get_id = self.driver.find_elements_by_css_selector("*[pr-test='Grid']")[elem_number].get_attribute("pr-id")
-    # #     self.result(get_id)
-    # #     print('fadsfasfa')
-    #
-    # def result(self, d_ids):
-    #     for i in d_ids:
-    #         print(i)
-    #         cur.execute(""" INSERT INTO test_data(test_name, result) VALUES ('Subscriptions','{"field": "%s"}');""" % i)
-    #     self.db_con = db_con
-    #     db_con.commit()
+    #     print('fadsfasfa')
+
+    def result(self, get_ids):
+        for i in get_ids:
+            print(i)
+            # print('xgchvbnjklkh')
+            cur.execute("""INSERT INTO test_data(test_name, result) VALUES ('Subscriptions','{"field": "%s"}');""" % i)
+        self.db_con = db_con
+        db_con.commit()
 
     # def get_title(self, elem=0):
     #     title = self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']")
     #     # print(title)
     #     title[elem].get_attribute("title")
-    #     # print(title)
+    #     print(title)
 
 
 

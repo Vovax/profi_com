@@ -53,8 +53,8 @@ class News(GeneralPart):
             # print(article)
             a_length = len(article) if count == 0 else a_length
             news_article = article[elem].get_attribute("text")
-            # print(news_article)
-            print(subs_article)
+            print(news_article, 'Z')
+            print(subs_article, 'Q')
             count += 1
 
             assert news_article == subs_article, 'Portal Name {subs_article} from "Subsciptions" does not equal to ' \
