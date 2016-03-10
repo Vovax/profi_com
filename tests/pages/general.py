@@ -7,11 +7,13 @@ from ..site_parts.subscriptions import Subscriptions
 from ..site_parts.news import News
 from ..site_parts.my_profile import My_profile
 from ..site_parts.help_page import Help_page
+from ..site_parts.registration import Registration
 
 
 class General(object):
 
-    dependences = ('logination', 'log_in', 'my_profile', 'subscriptions', 'news', 'help_page', 'loged_in_user', 'header')
+    dependences = ('logination', 'registration', 'log_in', 'my_profile', 'subscriptions', 'news', 'help_page',
+                   'loged_in_user', 'header')
 
     def __init__(self, dependences=dependences, driver=None, device='PC', testing_page=PROFIREADER_URL):
         # print('general')
@@ -28,7 +30,7 @@ class General(object):
         self.driver.implicitly_wait(3)
 
     def call_dependences(self, dependences):
-        classes = (Log_in, My_profile, Subscriptions, News, Help_page)
+        classes = (Registration, Log_in, My_profile, Subscriptions, News, Help_page)
 
         [a() for a in map(lambda cls: cls(driver=self.driver),
                           filter(lambda cls: cls.__repr__() in dependences, classes))]

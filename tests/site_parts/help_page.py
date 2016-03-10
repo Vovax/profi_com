@@ -6,6 +6,7 @@ import time
 
 
 class Help_page(GeneralPart):
+
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL):
         super().__init__(driver=driver)
         self.driver = driver
