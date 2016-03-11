@@ -2,7 +2,10 @@ from .general_part import GeneralPart
 from selenium.webdriver.common.keys import Keys
 import config
 import time
-from utils.db_init import db_con, cur
+from utils.db_init import profi_db_con, pro_cur
+import pathlib
+import os
+from os import path
 
 
 
@@ -14,7 +17,8 @@ class Registration(GeneralPart):
         self.testing_page = testing_page
         self.user_name = user_name
         # cur.execute("SELECT data FROM test_data WHERE test_name='Registration'; ")
-        # elem = cur.fetchone()[0]
+
+
         # print(elem.get('user_pass'))
         # print(elem.get('user_mail'))
         # self.user_email = elem.get('user_mail')
@@ -23,6 +27,8 @@ class Registration(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_registration()
+        self.checkUser()
+        self.tearDown()
 
     @classmethod
     def __repr__(cls):
@@ -38,9 +44,10 @@ class Registration(GeneralPart):
 
         reg_title = self.driver.find_elements_by_css_selector("*[pr-test='TabSignUp']")
         title = reg_title[elem].get_attribute("text")
-        print(title)
+        # print(title)
+        registration = 'Реєстрація'
 
-        assert 'Реєстрація'== title, 'Can"t find registration page {page}'.format(page=self.driver.current_url)
+        assert registration == title, 'Can"t find registration page {page}'.format(page=self.driver.current_url)
 
         # email = self.driver.find_elements_by_css_selector("*[pr-test='RegEmail']")
         email = self.driver.find_element_by_name('email')
@@ -66,4 +73,31 @@ class Registration(GeneralPart):
         reg_btn = self.driver.find_element_by_class_name('sabmit-form')
         reg_btn.submit()
 
+        # assert ''
+
+    # def checkUser(self):
+    #     pro_cur.execute("""SELECT "profireader_name" FROM "user" WHERE "profireader_email"='1@1.com';""")
+    #     elem = pro_cur.fetchone()[0]
+    #     print(elem)
+    #
+    # def tearDown(self):
+    #
+    #     pro_cur.execute("""DELETE FROM "user" WHERE "profireader_email"='1@1.com';""")
+    #     profi_db_con.commit()
+    #
+    #
+    #     print('dadqwdqwdwefadfadfsdfasdfasdasdfafsdaf')
+
+
+        # # We need to kick John out of the database, otherwise the test will fail
+        # # in the future
+        # path_to_database = path.join(path.curdir, "databases")
+        # db = DAL('sqlite://storage.sqlite', folder=path_to_database)
+        # db.import_table_definitions(path_to_database)
+        #
+        # #This gives us the users with the email address john@tukker.me
+        # db_query = db(db.auth_user.email == 'john@tukker.me').select()
+        # if len(db_query) > 0:
+        #     db_query[0].delete_record() # delete John
+        #     db.commit()
 
