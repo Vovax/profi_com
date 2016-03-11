@@ -2,20 +2,25 @@ from .general_part import GeneralPart
 from selenium.webdriver.common.keys import Keys
 import config
 import time
+from ..site_parts.log_in import Log_in
 from utils.db_init import profi_db_con, pro_cur
 import pathlib
 import os
 from os import path
+import poplib
 
 
 
 class Registration(GeneralPart):
 
-    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_name=config.USER['name']):
+    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_pass=('1'), user_email=('saq@me.com'),
+                 user_name=config.USER['name']):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
         self.user_name = user_name
+        self.user_email = user_email
+        self.user_pass = user_pass
         # cur.execute("SELECT data FROM test_data WHERE test_name='Registration'; ")
 
 
@@ -27,8 +32,9 @@ class Registration(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_registration()
-        self.checkUser()
-        self.tearDown()
+        # self.checkUser()
+        # self.tearDown()
+        self.new_user()
 
     @classmethod
     def __repr__(cls):
@@ -42,38 +48,72 @@ class Registration(GeneralPart):
         reg_tag = self.driver.find_elements_by_css_selector(self.get_division_select_registration)
         reg_tag[0].click()
 
-        reg_title = self.driver.find_elements_by_css_selector("*[pr-test='TabSignUp']")
-        title = reg_title[elem].get_attribute("text")
-        # print(title)
-        registration = 'Реєстрація'
+        # reg_title = self.driver.find_elements_by_css_selector("*[pr-test='TabSignUp']")
+        # title = reg_title[elem].get_attribute("text")
+        # # print(title)
+        # registration = 'Реєстрація'
+        #
+        # assert registration == title, 'Can"t find registration page {page}'.format(page=self.driver.current_url)
+        #
+        # # email = self.driver.find_elements_by_css_selector("*[pr-test='RegEmail']")
+        # email = self.driver.find_element_by_name('email')
+        # email.send_keys(self.user_email)
+        # time.sleep(1)
+        #
+        # # display_name = self.driver.find_elements_by_css_selector("*[pr-test='RegName']")
+        # display_name = self.driver.find_element_by_name('display_name')
+        # display_name.send_keys(self.user_name)
+        # time.sleep(1)
+        #
+        # # password = self.driver.find_elements_by_css_selector("*[pr-test='RegPass']")
+        # password = self.driver.find_element_by_name('password')
+        # password.send_keys(self.user_pass)
+        # time.sleep(1)
+        #
+        # # repeat_password = self.driver.find_elements_by_css_selector("*[pr-test='RegRepeatPass']")
+        # verify_password = self.driver.find_element_by_name('password1')
+        # verify_password.send_keys(self.user_pass)
+        # time.sleep(1)
+        #
+        # # reg_btn = self.driver.find_elements_by_css_selector("*[pr-test='RegSubmit']")
+        # reg_btn = self.driver.find_element_by_class_name('sabmit-form')
+        # reg_btn.submit()
+        #
+        # assert 'A confirmation email has been sent to you by email.' in self.driver.page_source, \
+        #     "Can't register user {user}".format(user=self.user_name)
+        # print(self.user_name)
 
-        assert registration == title, 'Can"t find registration page {page}'.format(page=self.driver.current_url)
+    
 
-        # email = self.driver.find_elements_by_css_selector("*[pr-test='RegEmail']")
-        email = self.driver.find_element_by_name('email')
-        email.send_keys('1@1.com')
-        time.sleep(1)
 
-        # display_name = self.driver.find_elements_by_css_selector("*[pr-test='RegName']")
-        display_name = self.driver.find_element_by_name('display_name')
-        display_name.send_keys(self.user_name)
-        time.sleep(1)
+        server = poplib.POP3("pop.gmail.com")
+        server.user("volodymyr.khvesyk@gmail.com")
+        server.pass_("pass")
+        numMessages = len(M.list()[1])
+        for i in range(numMessages):
+            for j in M.retr(i+1)[1]:
+                print(j)
+            break
 
-        # password = self.driver.find_elements_by_css_selector("*[pr-test='RegPass']")
+
+
+
+    def new_user(self):
+        login_tag = self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)
+        login_tag[0].click()
+
+        # Log_in.login(self)
+        # print('ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ')
+
+        user = self.driver.find_element_by_name('email')
+        user.send_keys(self.user_email)
+        time.sleep(2)
         password = self.driver.find_element_by_name('password')
-        password.send_keys('1')
-        time.sleep(1)
+        password.send_keys(self.user_pass)
+        time.sleep(2)
+        form = self.driver.find_element_by_class_name('submit-form')
+        form.submit()
 
-        # repeat_password = self.driver.find_elements_by_css_selector("*[pr-test='RegRepeatPass']")
-        verify_password = self.driver.find_element_by_name('password1')
-        verify_password.send_keys('1')
-        time.sleep(1)
-
-        # reg_btn = self.driver.find_elements_by_css_selector("*[pr-test='RegSubmit']")
-        reg_btn = self.driver.find_element_by_class_name('sabmit-form')
-        reg_btn.submit()
-
-        # assert ''
 
     # def checkUser(self):
     #     pro_cur.execute("""SELECT "profireader_name" FROM "user" WHERE "profireader_email"='1@1.com';""")
@@ -89,15 +129,5 @@ class Registration(GeneralPart):
     #     print('dadqwdqwdwefadfadfsdfasdfasdasdfafsdaf')
 
 
-        # # We need to kick John out of the database, otherwise the test will fail
-        # # in the future
-        # path_to_database = path.join(path.curdir, "databases")
-        # db = DAL('sqlite://storage.sqlite', folder=path_to_database)
-        # db.import_table_definitions(path_to_database)
-        #
-        # #This gives us the users with the email address john@tukker.me
-        # db_query = db(db.auth_user.email == 'john@tukker.me').select()
-        # if len(db_query) > 0:
-        #     db_query[0].delete_record() # delete John
-        #     db.commit()
+
 

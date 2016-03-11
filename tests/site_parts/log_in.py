@@ -32,6 +32,9 @@ class Log_in (GeneralPart):
         login_tag = self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)
         login_tag[0].click()
         time.sleep(2)
+
+        # Log_in.login(self)
+
         username = self.driver.find_element_by_name('email')
         username.send_keys(self.user_email)
         time.sleep(2)
@@ -49,3 +52,13 @@ class Log_in (GeneralPart):
         # assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
         #     'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
+    # @staticmethod
+    # def login(self):
+    #     username = self.driver.find_element_by_name('email')
+    #     username.send_keys(self.user_email)
+    #     time.sleep(2)
+    #     password = self.driver.find_element_by_name('password')
+    #     password.send_keys(self.user_password)
+    #     time.sleep(2)
+    #     form = self.driver.find_element_by_class_name('submit-form')
+    #     form.submit()
