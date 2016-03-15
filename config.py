@@ -12,6 +12,7 @@ LOG_IN = {'name': secret_data.LOG_IN_NAME}
 #           'mail': secret_data.LOG_IN_MAIL,
 #           'pass': secret_data.LOG_IN_PASSWORD}
 #
+
 USER = {'name': secret_data.PROFI_USER_NAME}
 #         'mail': secret_data.PROFI_USER_MAIL,
 #         'pass': secret_data.PROFI_USER_PASSWORD}
@@ -19,3 +20,10 @@ USER = {'name': secret_data.PROFI_USER_NAME}
 # PROFIREADER_NAME = secret_data.PROFI_USER_NAME
 # PROFIREADER_MAIL = secret_data.PROFI_USER_MAIL
 # PROFIREADER_PASSWORD = secret_data.PROFI_USER_PASSWORD
+
+CONFIRM = {'email': secret_data.SQUIRREL_EMAIL,
+           'name': secret_data.SQUIRREL_NAME,
+           'pass': secret_data.SQUIRREL_PASS}
+
+SQUIRREL_FRAME = 'https://mail.ntaxa.com/src/right_main.php'
+
