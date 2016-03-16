@@ -30,7 +30,7 @@ class General(object):
         self.driver.implicitly_wait(3)
 
     def call_dependences(self, dependences):
-        classes = (Registration, Log_in, My_profile, Subscriptions, News, Help_page)
+        classes = (Log_in, My_profile, Subscriptions, News, Help_page, Registration)
 
         [a() for a in map(lambda cls: cls(driver=self.driver),
                           filter(lambda cls: cls.__repr__() in dependences, classes))]

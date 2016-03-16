@@ -5,8 +5,8 @@ from utils.db_init import cur
 from utils.db_init import db_con
 
 
-
 class Subscriptions(GeneralPart):
+
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL):
         super().__init__(driver=driver)
         self.driver = driver
@@ -18,7 +18,6 @@ class Subscriptions(GeneralPart):
         # self.fieldid()
         # self.result()
         # self.get_title()
-
 
     @classmethod
     def __repr__(cls):
@@ -32,34 +31,21 @@ class Subscriptions(GeneralPart):
         get_ids = set()
         for item in self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']"):
             get_ids.update({item.get_attribute("pr-id")})
-        print(get_ids)
+        # print(get_ids)
         self.result(get_ids)
-
-    # def fieldid(self, elem_number=0, **kwarg):
-    #     d_ids = self.driver.find_elements_by_css_selector("*[pr-test='Grid']")[elem_number].get_attribute("pr-id")
-    #     self.result(d_ids)
-    #     print('fadsfasfa')
 
     def result(self, get_ids):
         for i in get_ids:
-            print(i)
-            # print('xgchvbnjklkh')
+            # print(i)
             cur.execute("""INSERT INTO test_data(test_name, result) VALUES ('Subscriptions','{"field": "%s"}');""" % i)
-        self.db_con = db_con
-        db_con.commit()
+            self.db_con = db_con
+            db_con.commit()
 
     # def get_title(self, elem=0):
     #     title = self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']")
     #     # print(title)
     #     title[elem].get_attribute("title")
     #     print(title)
-
-
-
-
-
-
-
 
         # for article in self.driver.find_elements_by_css_selector("*[pr-test='ArticlePortal']"):
         #     # self.driver.execute_script("window.scrollTo(0, 10000);")
@@ -92,10 +78,6 @@ class Subscriptions(GeneralPart):
         # p = self.driver.find_elements_by_css_selector("*[pr-test='ArticlePortal']")[0].text
         # print(p)
 
-
-
-
-
         # for company in self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']"):
         #     title = company.get_attribute("title")
         #     print(title)
@@ -107,7 +89,5 @@ class Subscriptions(GeneralPart):
         # div[@class='ui-grid-contents-wrapper']/div[@class=''ui-grid-viewport ng-isolate-scope]/\
         # div[@class='ui-grid-canvas']/div[@class='ui-grid-row ng-scope _ss']/div[@class='ng-isolate-scope']/\
         # div[@class='ui-grid-cell ng-scope ui-grid-coluiGrid-0006']/\
-        # div[@class='ui-grid-cell-contents pr-grid-cell-field-type-link pr-grid-cell-field-name-portal_name  ng-scope']")[0].click()
-        # print(id)
-            # .get_attribute("pr-id")
-        # print(field_id)
+        # div[@class='ui-grid-cell-contents pr-grid-cell-field-type-link pr-grid-cell-field-name-portal_name
+        # ng-scope']")[0].click()
