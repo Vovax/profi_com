@@ -28,12 +28,6 @@ class Registration(GeneralPart):
         self.keypass_confirm = keypass_confirm
         self.name_confirm = name_confirm
         self.frame = new_frame
-        # cur.execute("SELECT data FROM test_data WHERE test_name='Registration'; ")
-        # print(elem.get('user_pass'))
-        # print(elem.get('user_mail'))
-        # self.user_email = elem.get('user_mail')
-        # self.user_password = elem.get('user_pass')
-
 
     def __call__(self, *args, **kwargs):
         self.test_registration()
@@ -43,11 +37,9 @@ class Registration(GeneralPart):
         self.getMessageLink()
         self.new_user_login()
 
-
     @classmethod
     def __repr__(cls):
         return 'registration'
-
 
     def test_registration(self, elem=0):
 

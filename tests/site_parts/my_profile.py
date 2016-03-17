@@ -12,12 +12,14 @@ class My_profile(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_my_profile()
+        # self.test_edit_profile()
 
     @classmethod
     def __repr__(cls):
         return 'my_profile'
 
     def test_my_profile(self, elem=0):
+
         self.driver.find_elements_by_css_selector(self.get_division_xpath_my_profile)[0].click()
         # self.click_my_profile_or_logout(profile_or_logout='profile')
         time.sleep(2)
@@ -26,15 +28,25 @@ class My_profile(GeneralPart):
         user_profile_name = self.driver.find_elements_by_css_selector("*[pr-test='UserProfiName']")[0].text
         # print(profile_name)
 
-        assert user_profile_name == user_header_name, "Can't move to 'User Profile' page {page}".format(page=self.driver.current_url)
+        assert user_profile_name == user_header_name, "Can't move to 'User Profile' page {page}"\
+            .format(page=self.driver.current_url)
 
         assert 'User Profile' in self.driver.page_source, 'Can"t find "User Profile" , page {page}'\
             .format(page=self.driver.current_url)
 
+        # Edit Profile
 
-
-
-
+    # def test_edit_profile(self):
+    #
+    #     self.driver.find_elements_by_css_selector("*[pr_test='EditProfile']")[0].click()
+    #
+    #     edit_title = self.driver.find_elements_by_css_selector("*[pr_test='EditProfileTitle']")[0].text
+    #
+    #     print(edit_title)
+    #
+    #     assert edit_title == 'Edit profile', "Can't edit profile page {page}".format(page=self.driver.current_url)
+    #
+    #     print(self.driver.current_url)
 
 
 
