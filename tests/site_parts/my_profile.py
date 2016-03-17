@@ -12,7 +12,7 @@ class My_profile(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_my_profile()
-        # self.test_edit_profile()
+        self.test_edit_profile()
 
     @classmethod
     def __repr__(cls):
@@ -28,25 +28,23 @@ class My_profile(GeneralPart):
         user_profile_name = self.driver.find_elements_by_css_selector("*[pr-test='UserProfiName']")[0].text
         # print(profile_name)
 
-        assert user_profile_name == user_header_name, "Can't move to 'User Profile' page {page}"\
-            .format(page=self.driver.current_url)
+        assert user_profile_name == user_header_name, "User header name {header_name} isn't equal to user profile " \
+                                                      "name {profile_name}, page {page}"\
+            .format(page=self.driver.current_url, header_name=user_header_name, profile_name=user_profile_name)
 
         assert 'User Profile' in self.driver.page_source, 'Can"t find "User Profile" , page {page}'\
             .format(page=self.driver.current_url)
 
         # Edit Profile
 
-    # def test_edit_profile(self):
-    #
-    #     self.driver.find_elements_by_css_selector("*[pr_test='EditProfile']")[0].click()
-    #
-    #     edit_title = self.driver.find_elements_by_css_selector("*[pr_test='EditProfileTitle']")[0].text
-    #
-    #     print(edit_title)
-    #
-    #     assert edit_title == 'Edit profile', "Can't edit profile page {page}".format(page=self.driver.current_url)
-    #
-    #     print(self.driver.current_url)
+    def test_edit_profile(self):
+
+        self.driver.find_elements_by_css_selector("*[pr_test='EditProfile']")[0].click()
+
+        edit_title = self.driver.find_elements_by_css_selector("*[pr-test='EditProfileTitle']")[0].text
+
+        assert edit_title == 'Edit profile', "Can't move to edit profile page {page}"\
+            .format(page=self.driver.current_url)
 
 
 
