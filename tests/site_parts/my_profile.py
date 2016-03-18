@@ -50,10 +50,5 @@ class My_profile(GeneralPart):
 
 
 
-        #
-        # drop_menu = self.driver.find_elements_by_xpath(self.get_division_xpath_drop_menu)
-        # drop_menu[0].click()
-        # time.sleep(5)
 
 
-        # assert 'profile' in self.driver.current_url, 'Can"t find My Profile page'.format(page=self.driver.current_url)
