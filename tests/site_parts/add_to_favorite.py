@@ -34,6 +34,7 @@ class Add_to_favorite(GeneralPart):
         print(favorite_btn)
         like = favorite_btn.get_attribute("pr-like")
         print(like)
+        time.sleep(10)
         # favorite_btn.click()
         # user_favorites = self.driver.find_element_by_css_selector("*[pr-test='UserFavorites']")[0].click()
 

@@ -1,22 +1,18 @@
 from .general_part import GeneralPart
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 import config
 import time
-from ..site_parts.log_in import Log_in
-from utils.db_init import profi_db_con, pro_cur
-import pathlib
-import os
-from os import path
-import poplib
-
 
 
 class Registration(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, email_confirm=config.CONFIRM['email'],
                  keypass_confirm=config.CONFIRM['pass'], name_confirm=config.CONFIRM['name'],
-                 user_name=('profi'), registration='Sign up', user_pass=('1'),
-                 user_email=('profi111@profi.ntaxa.com'), new_frame=config.SQUIRREL_FRAME):
+                 user_name=('myname'), registration='Sign up', user_pass=('1'),
+                 user_email=('p11ame@profi.ntaxa.com'), new_frame=config.SQUIRREL_FRAME):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
@@ -31,11 +27,9 @@ class Registration(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_registration()
-        # self.checkUser()
-        # self.tearDown()
-        # self.checkUserConfirm()
         self.getMessageLink()
         self.new_user_login()
+        self.log_out()
 
     @classmethod
     def __repr__(cls):
@@ -50,7 +44,6 @@ class Registration(GeneralPart):
 
         reg_title = self.driver.find_elements_by_css_selector("*[pr-test='TabSignUp']")
         title = reg_title[elem].get_attribute("text")
-        # print(title)
 
         assert self.registration == title, 'Can"t find registration page {page}'.format(page=self.driver.current_url)
 
@@ -134,21 +127,13 @@ class Registration(GeneralPart):
         assert conf_text == confirmed or conf_text in self.driver.page_source, "Not Confirmed User {user}"\
             .format(user=self.user_email)
 
-        print('ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ')
-
     def new_user_login(self):
 
-        # self.driver.get(self.testing_page)
         self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
-
+        
         self.driver.find_elements_by_css_selector("*[pr-test='AcceptLicence']")[0].click()
 
         user_header_name = self.driver.find_elements_by_css_selector("*[pr_test='UserProfile']")[0].text
-        # print(user_header_name)
-
-        # profile[0].click()
-
-        # print(user_header_name)
 
         assert user_header_name == self.user_name, "User header name {header_name} isn't equal to user profile name " \
                                                    "{profile_name}, page {page}"\
@@ -156,20 +141,35 @@ class Registration(GeneralPart):
 
         log_out = self.driver.find_elements_by_css_selector("*[pr_test='LogOut']")
         log_out_txt = log_out[0].text
-        print(log_out_txt)
 
         assert 'Log out' == log_out_txt, "Can't find Log out button"
 
-        log_out[0].click()
+    def log_out(self):
+        action = ActionChains(self.driver)
+        log_out_btn = self.driver.find_element_by_css_selector("*[pr_test='LogOut']")
+        action.move_to_element(log_out_btn).perform()
+        time.sleep(5)
+        log_out_btn.click()
+
+        login_btn_visibility = self.driver.find_elements_by_css_selector("*[pr_test='LogIn']")[0].text
+
+        assert 'Login' == login_btn_visibility, "User {user} can't finally Log out".format(user=self.user_name)
 
 
 
 
 
-    #     self.checkUserConfirm(user_email=self.user_email)
-    #
-    #
-    #
+
+
+
+
+
+
+
+
+        # el = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "*[pr_test='LogOut']")))
+        # el.click()
+
     # def checkUserConfirm(self, user_email):
     #     pro_cur.execute("""SELECT "confirmed" FROM "user" WHERE "profireader_email"='%s';""" % user_email)
     #     elem = pro_cur.fetchone()[0]
@@ -181,7 +181,6 @@ class Registration(GeneralPart):
     #         assert elem == False, "User doesn't confirmed email {email}".format(email=user_email)
     #         return elem
 
-
     # def checkUser(self):
     #     pro_cur.execute("""SELECT "profireader_name" FROM "user" WHERE "profireader_email"='1@1.com';""")
     #     elem = pro_cur.fetchone()[0]
@@ -191,10 +190,6 @@ class Registration(GeneralPart):
     #
     #     pro_cur.execute("""DELETE FROM "user" WHERE "profireader_email"='1@1.com';""")
     #     profi_db_con.commit()
-    #
-    #
-    #     print('dadqwdqwdwefadfadfsdfasdfasdasdfafsdaf')
-
 
         # server = poplib.POP3("pop.gmail.com")
         # server.user("mail")
