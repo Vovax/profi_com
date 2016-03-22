@@ -15,8 +15,8 @@ class Registration(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, email_confirm=config.CONFIRM['email'],
                  keypass_confirm=config.CONFIRM['pass'], name_confirm=config.CONFIRM['name'],
-                 user_name=('myname'), registration='Реєстрація', user_pass=('1'),
-                 user_email=('t1@profi.ntaxa.com'), new_frame=config.SQUIRREL_FRAME):
+                 user_name=('profi'), registration='Sign up', user_pass=('1'),
+                 user_email=('profi111@profi.ntaxa.com'), new_frame=config.SQUIRREL_FRAME):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
@@ -113,31 +113,54 @@ class Registration(GeneralPart):
         link[0].click()
 
         confirm_link = self.driver.find_elements_by_xpath("/html/body/table[4]/tbody/tr[1]/td/table/tbody/tr/td/table/"
-                                                          "tbody/tr/td/table/tbody/tr/td/pre/a")
-        confirm_link[0].click()
+                                                          "tbody/tr/td/table/tbody/tr/td/pre/a")[0].get_attribute("href")
+        print(confirm_link)
 
-        # assert 'Please log in to access this page.' in self.driver.page_source, "Not Confirmed User {user}"\
-        #     .format(user=self.user_email)
+        # hello_user = self.driver.find_elements_by_css_selector("*[pr-test='HelloUser']").get_attribute("text")
+        # print(hello_user)
+
+        self.driver.get(confirm_link)
+
+        print('Hello,' + ' ' + self.user_name + '!')
+
+        assert 'Hello,' + ' ' + self.user_name + '!' in self.driver.page_source, \
+            "Can't find new user name {name} on page source {page}".format(name=self.user_name,
+                                                                           page=self.driver.page_source)
+
+        confirmed = self.driver.find_elements_by_css_selector("*[pr-test='Confirmed']")[0].text
+        print(confirmed)
+        conf_text = 'You have confirmed your account successfully!'
+
+        assert conf_text == confirmed or conf_text in self.driver.page_source, "Not Confirmed User {user}"\
+            .format(user=self.user_email)
 
         print('ΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩΩ')
 
     def new_user_login(self):
 
-        self.driver.get(self.testing_page)
-        login_tag = self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)
-        login_tag[0].click()
+        # self.driver.get(self.testing_page)
+        self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
 
-        user = self.driver.find_element_by_name('email')
-        user.send_keys(self.user_email)
-        time.sleep(2)
-        password = self.driver.find_element_by_name('password')
-        password.send_keys(self.user_pass)
-        time.sleep(2)
-        form = self.driver.find_element_by_class_name('submit-form')
-        form.submit()
+        self.driver.find_elements_by_css_selector("*[pr-test='AcceptLicence']")[0].click()
 
-        print('≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈')
+        user_header_name = self.driver.find_elements_by_css_selector("*[pr_test='UserProfile']")[0].text
+        # print(user_header_name)
 
+        # profile[0].click()
+
+        # print(user_header_name)
+
+        assert user_header_name == self.user_name, "User header name {header_name} isn't equal to user profile name " \
+                                                   "{profile_name}, page {page}"\
+            .format(page=self.driver.current_url, header_name=user_header_name, profile_name=self.user_name)
+
+        log_out = self.driver.find_elements_by_css_selector("*[pr_test='LogOut']")
+        log_out_txt = log_out[0].text
+        print(log_out_txt)
+
+        assert 'Log out' == log_out_txt, "Can't find Log out button"
+
+        log_out[0].click()
 
 
 
