@@ -9,10 +9,10 @@ import time
 
 class Registration(GeneralPart):
 
-    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, email_confirm=config.CONFIRM['email'],
-                 keypass_confirm=config.CONFIRM['pass'], name_confirm=config.CONFIRM['name'],
-                 user_name=('myname'), registration='Sign up', user_pass=('1'),
-                 user_email=('p11ame@profi.ntaxa.com'), new_frame=config.SQUIRREL_FRAME):
+    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, new_frame=config.SQUIRREL_FRAME,
+                 email_confirm=config.CONFIRM['email'], keypass_confirm=config.CONFIRM['pass'],
+                 name_confirm=config.CONFIRM['name'], registration='Sign up',
+                 user_email=('p11ame@profi.ntaxa.com'), user_name=('myname'), user_pass=('1')):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
@@ -27,7 +27,7 @@ class Registration(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_registration()
-        self.getMessageLink()
+        self.get_message_link()
         self.new_user_login()
         self.log_out()
 
@@ -90,7 +90,7 @@ class Registration(GeneralPart):
         login.submit()
         time.sleep(2)
 
-    def getMessageLink(self):
+    def get_message_link(self):
 
         self.driver.get(self.frame)
         link = self.driver.find_elements_by_xpath("/html/body/form/table/tbody/tr[5]/td/table/tbody/tr/td/table/tbody/"
@@ -105,8 +105,7 @@ class Registration(GeneralPart):
         time.sleep(2)
         link[0].click()
 
-        confirm_link = self.driver.find_elements_by_xpath("/html/body/table[4]/tbody/tr[1]/td/table/tbody/tr/td/table/"
-                                                          "tbody/tr/td/table/tbody/tr/td/pre/a")[0].get_attribute("href")
+        confirm_link = self.driver.find_elements_by_xpath(self.get_division_select_confirm_link)[0].get_attribute("href")
         print(confirm_link)
 
         # hello_user = self.driver.find_elements_by_css_selector("*[pr-test='HelloUser']").get_attribute("text")
@@ -130,7 +129,7 @@ class Registration(GeneralPart):
     def new_user_login(self):
 
         self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
-        
+
         self.driver.find_elements_by_css_selector("*[pr-test='AcceptLicence']")[0].click()
 
         user_header_name = self.driver.find_elements_by_css_selector("*[pr_test='UserProfile']")[0].text
@@ -145,6 +144,7 @@ class Registration(GeneralPart):
         assert 'Log out' == log_out_txt, "Can't find Log out button"
 
     def log_out(self):
+
         action = ActionChains(self.driver)
         log_out_btn = self.driver.find_element_by_css_selector("*[pr_test='LogOut']")
         action.move_to_element(log_out_btn).perform()
@@ -201,4 +201,9 @@ class Registration(GeneralPart):
         #         print(j)
         #     break
 
+    # def scroll_to_and_click(xpath):
+    #     btn = TestUtil.driver.find_element_by_xpath(xpath)
+    #     TestUtil.driver.execute_script('window.scrollTo(0, ' + str(btn.location['y'])
+# + ');')
+#         btn.click()
 

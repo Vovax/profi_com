@@ -19,6 +19,7 @@ class GeneralPart(object):
         self.get_division_xpath_readline = self.division_xpath_readline()
         self.get_division_xpath_help_page = self.division_xpath_help_page()
         self.get_division_select_registration = self.division_select_registration()
+        self.get_division_select_confirm_link = self.division_select_confirm_link()
 
 
     def get_testing_page(self, elem_number=0):
@@ -33,6 +34,9 @@ class GeneralPart(object):
     #     return self.driver.find_element_by_xpath("//div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav']"
     #                                              "/li/a[@id='navigation_selected_division']").text
 
+    @staticmethod
+    def division_select_confirm_link():
+        return "/html/body/table[4]/tbody/tr[1]/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/pre/a"
 
     @staticmethod
     def division_xpath_log_in():
