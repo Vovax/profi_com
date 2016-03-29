@@ -31,7 +31,6 @@ class Help_page(GeneralPart):
     def __repr__(cls):
         return 'help_page'
 
-
     def test_help_page(self, elem=0):
 
         self.driver.find_elements_by_css_selector(self.get_division_xpath_help_page)[0].click()
@@ -51,12 +50,13 @@ class Help_page(GeneralPart):
         time.sleep(3)
 
         send_btn = self.driver.find_element_by_css_selector("*[pr-test='SendMessage']")
-        email = self.driver.find_element_by_css_selector("*[pr-test='EmailInput']")
+        # email = self.driver.find_element_by_css_selector("*[pr-test='EmailInput']")
         # email.send_keys(email_text)
         message = self.driver.find_element_by_css_selector("*[pr-test='TextInput']")
         message.send_keys(rand_msg_text)
+        time.sleep(2)
         send_btn.click()
-        time.sleep(7)
+        time.sleep(10)
         # print(message)
 
         # assert 'Your message has been sent!' in self.driver.page_source, "Message {msg} hasn't been sent"\
@@ -94,8 +94,10 @@ class Help_page(GeneralPart):
 
         assert rand_msg_text in text_assert, "Can't find Contact Us Message {msg}".format(msg=rand_msg_text)
 
-        print(self.email)
-        print(mail_assert)
+        # print(self.email)
+        # print(mail_assert)
         assert self.email == mail_assert, "Profile_email {pr_email} not equal to Inbox_email {in_email}"\
             .format(pr_email=self.user_email, in_email=mail_assert)
+        time.sleep(5)
 
+        self.driver.get(self.testing_page)

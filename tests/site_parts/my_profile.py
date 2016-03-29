@@ -5,7 +5,6 @@ from selenium.webdriver.common.keys import Keys
 import unittest
 
 
-
 class My_profile(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL):

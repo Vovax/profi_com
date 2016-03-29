@@ -5,16 +5,10 @@ from selenium.webdriver.common.keys import Keys
 import os, sys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.action_chains import Command
-
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
-
-
-
-
 
 
 class Add_to_favorite(GeneralPart):
@@ -38,21 +32,21 @@ class Add_to_favorite(GeneralPart):
 
         self.driver.find_elements_by_css_selector("*[pr_test='UserNews']")[0].click()
 
-        favorite_btn = self.driver.find_element_by_css_selector("*[pr-test='AddToFavoriteButton']")
-        print(favorite_btn)
+        # favorite_btn = self.driver.find_element_by_css_selector("*[pr-test='AddToFavoriteButton']")
+        # print(favorite_btn)
         # like = favorite_btn.get_attribute("pr-like")
         # print(like)
         # time.sleep(5)
 
-        # while True:
-        #     self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        #     time.sleep(10)
-        #     new_Height = self.driver.execute_script("return document.body.scrollHeight")
-        #     if old_pos != new_Height:
-        #         old_pos = new_Height
-        #     else:
-        #         return False
-        #     print(new_Height)
+        while True:
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(10)
+            new_Height = self.driver.execute_script("return document.body.scrollHeight")
+            if old_pos != new_Height:
+                old_pos = new_Height
+            else:
+                return False
+            print(new_Height)
 
     def click_favorite(self):
         # WebDriverWait wait = new WebDriverWait(driver, 15)
@@ -65,11 +59,17 @@ class Add_to_favorite(GeneralPart):
         # except TimeoutException:
         #     print("Button not found in ...")
 
-        el = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-                                                                              "*[pr-test='AddToFavoriteButton']")))
-        print(el)
+        # el = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+        #                                                                       "*[pr-test='AddToFavoriteButton']")))
+        favorite_btn = self.driver.find_elements_by_css_selector("*[pr-test='AddToFavoriteButton']")
+        # print(favorite_btn)
+        for i in favorite_btn:
+            print(i)
+            i.click()
+        # print(el)
         time.sleep(10)
-        el.click()
+        # el.click()
+        favorite_btn.click()
 
         # action = ActionChains(self.driver)
         # favo_btn = self.driver.find_elements_by_css_selector("*[pr-test='AddToFavoriteButton']")
