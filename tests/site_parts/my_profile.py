@@ -17,6 +17,7 @@ class My_profile(GeneralPart):
         self.test_my_profile()
         self.test_edit_profile()
         self.test_saving_text_changes()
+        # self.upload_file()
 
     @classmethod
     def __repr__(cls):
@@ -77,11 +78,25 @@ class My_profile(GeneralPart):
         edit_profile = self.driver.find_elements_by_css_selector("*[pr_test='EditProfile']")
         edit_profile[0].click()
 
-        upload_btn = self.driver.find_elements_by_css_selector("*[pr-test='UploadImageBtn']")
-        print(upload_btn)
-        upload_btn.send_keys("home/apple/desktop/test.jpg")
 
-        self.driver.find_elements_by_css_selector("*[pr-test='UploadImageBtn']").click()
-        self.driver.switchTo().activeElement().sendKeys( "/home/test.jpg")
+
+
+
+
+
+
+
+
+
+
+
+    # def upload_file(self):
+    #     upload_btn = self.driver.find_elements_by_css_selector("*[pr-test='UploadImageBtn']")
+    #     print(upload_btn)
+    #     time.sleep(5)
+    #     upload_btn.send_keys("/Users/apple/Desktop/test.jpg")
+
+        # self.driver.find_elements_by_css_selector("*[pr-test='UploadImageBtn']").click()
+        # self.driver.switchTo().activeElement().send_keys("/Users/apple/Desktop/test.jpg")
 
 
