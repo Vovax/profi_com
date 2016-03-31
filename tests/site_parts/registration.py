@@ -38,7 +38,7 @@ class Registration(GeneralPart):
 
     def test_registration(self, elem=0):
 
-        self.click_login(login='LogIn')
+        self.click_login_or_logout(login_or_logout='LogIn')
         reg_tag = self.driver.find_elements_by_css_selector(self.get_division_select_registration)
         reg_tag[0].click()
 
@@ -128,7 +128,7 @@ class Registration(GeneralPart):
 
     def new_user_login(self):
 
-        self.click_login(login='LogIn')
+        self.click_login_or_logout(login_or_logout='LogIn')
 
         self.driver.find_elements_by_css_selector("*[pr-test='AcceptLicence']")[0].click()
 
@@ -144,6 +144,8 @@ class Registration(GeneralPart):
         assert 'Log out' == log_out_txt, "Can't find Log out button"
 
     def log_out(self):
+
+        # Assert this = self.click_login_or_logout(login_or_logout='LogOut')
 
         action = ActionChains(self.driver)
         log_out_btn = self.driver.find_element_by_css_selector("*[pr_test='LogOut']")
