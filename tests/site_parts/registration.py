@@ -27,6 +27,7 @@ class Registration(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_registration()
+        self.squirell_mail_login()
         self.get_message_link()
         self.new_user_login()
         self.log_out()
@@ -37,8 +38,7 @@ class Registration(GeneralPart):
 
     def test_registration(self, elem=0):
 
-        login_tag = self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)
-        login_tag[0].click()
+        self.click_login(login='LogIn')
         reg_tag = self.driver.find_elements_by_css_selector(self.get_division_select_registration)
         reg_tag[0].click()
 
@@ -77,7 +77,7 @@ class Registration(GeneralPart):
 
         time.sleep(5)
 
-        # SquirrelMail Confirmation
+    def squirell_mail_login(self):
         self.driver.get(self.confirm)
 
         name = self.driver.find_element_by_name('login_username')
@@ -128,7 +128,7 @@ class Registration(GeneralPart):
 
     def new_user_login(self):
 
-        self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)[0].click()
+        self.click_login(login='LogIn')
 
         self.driver.find_elements_by_css_selector("*[pr-test='AcceptLicence']")[0].click()
 

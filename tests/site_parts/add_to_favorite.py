@@ -30,7 +30,7 @@ class Add_to_favorite(GeneralPart):
 
     def test_add_to_favorite(self, elem=0, old_pos=0):
 
-        self.driver.find_elements_by_css_selector("*[pr_test='UserNews']")[0].click()
+        self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserNews')
 
         # favorite_btn = self.driver.find_element_by_css_selector("*[pr-test='AddToFavoriteButton']")
         # print(favorite_btn)

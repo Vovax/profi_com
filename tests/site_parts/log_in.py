@@ -29,11 +29,7 @@ class Log_in (GeneralPart):
 
     def test_log_in(self):
 
-        login_tag = self.driver.find_elements_by_css_selector(self.get_division_xpath_log_in)
-        login_tag[0].click()
-        time.sleep(2)
-
-        # Log_in.login(self)
+        self.click_login_or_logout(login_or_logout='LogIn')
 
         username = self.driver.find_element_by_name('email')
         username.send_keys(self.user_email)

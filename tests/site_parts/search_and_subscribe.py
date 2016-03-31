@@ -68,7 +68,7 @@ class Search_and_Subscribe(GeneralPart):
 
     def get_portal_id(self, portal_id, **kwarg):
 
-        self.driver.find_elements_by_css_selector(self.get_division_xpath_subscriptions)[0].click()
+        self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserSubscriptions')
         get_ids = set()
         for item in self.driver.find_elements_by_css_selector("*[pr-test='Grid-portal_name']"):
             get_ids.update({item.get_attribute("pr-id")})

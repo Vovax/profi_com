@@ -4,7 +4,6 @@ import time
 from utils.db_init import db_con, cur
 
 
-
 class Logination(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_name=config.USER['name']):
@@ -31,7 +30,7 @@ class Logination(GeneralPart):
 
     def test_google_login(self):
 
-        self.click_login(login='LogIn')
+        self.click_login_or_logout(login_or_logout='LogIn')
 
         google_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_google)
         google_login[0].click()
@@ -51,12 +50,12 @@ class Logination(GeneralPart):
         assert self.user_name in self.driver.find_elements_by_css_selector(self.get_division_xpath_my_profile)[0].text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
-        self.click_logout(logout='LogOut')
+        self.click_login_or_logout(login_or_logout='LogOut')
         time.sleep(3)
 
     def test_facebook_login(self):
 
-        self.click_login(login='LogIn')
+        self.click_login_or_logout(login_or_logout='LogIn')
 
         facebook_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_facebook)
         facebook_login[0].click()
@@ -71,12 +70,12 @@ class Logination(GeneralPart):
         assert self.user_name in self.driver.find_elements_by_css_selector(self.get_division_xpath_my_profile)[0].text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
-        self.click_logout(logout='LogOut')
+        self.click_login_or_logout(login_or_logout='LogOut')
         time.sleep(3)
 
     def test_linkedin_login(self):
 
-        self.click_login(login='LogIn')
+        self.click_login_or_logout(login_or_logout='LogIn')
 
         linkedin_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_linkedin)
         linkedin_login[0].click()
@@ -92,12 +91,12 @@ class Logination(GeneralPart):
         assert self.user_name in self.driver.find_elements_by_css_selector(self.get_division_xpath_my_profile)[0].text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
-        self.click_logout(logout='LogOut')
+        self.click_login_or_logout(login_or_logout='LogOut')
         time.sleep(3)
 
     def test_microsoft_login(self):
 
-        self.click_login(login='LogIn')
+        self.click_login_or_logout(login_or_logout='LogIn')
 
         microsoft_login = self.driver.find_elements_by_css_selector(self.get_division_xpath_login_by_microsoft)
         microsoft_login[0].click()
@@ -112,6 +111,6 @@ class Logination(GeneralPart):
         assert self.user_name in self.driver.find_elements_by_css_selector(self.get_division_xpath_my_profile)[0].text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
-        self.click_logout(logout='LogOut')
+        self.click_login_or_logout(login_or_logout='LogOut')
         time.sleep(3)
 

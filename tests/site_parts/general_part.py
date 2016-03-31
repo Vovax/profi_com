@@ -7,13 +7,11 @@ class GeneralPart(object):
         self.driver = driver
         self.get_division_xpath_log_in = self.division_xpath_log_in()
         self.get_division_xpath_log_out = self.division_xpath_log_out()
-        # self.get_division_xpath_drop_menu = self.division_xpath_drop_menu()
         self.get_division_xpath_my_profile = self.division_xpath_my_profile()
         self.get_division_xpath_login_by_google = self.division_xpath_login_by_google()
         self.get_division_xpath_login_by_facebook = self.division_xpath_login_by_facebook()
         self.get_division_xpath_login_by_linkedin = self.division_xpath_login_by_linkedin()
         self.get_division_xpath_login_by_microsoft = self.division_xpath_login_by_microsoft()
-        self.get_division_xpath_logination = self.division_xpath_logination()
         self.get_division_xpath_subscriptions = self.division_xpath_subscriptions()
         self.get_division_xpath_readline = self.division_xpath_readline()
         self.get_division_xpath_help_page = self.division_xpath_help_page()
@@ -31,17 +29,6 @@ class GeneralPart(object):
     @staticmethod
     def division_select_registration():
         return "*[pr-test='TabSignUp']"
-
-    @staticmethod
-    def division_xpath_logination():
-        return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
-        [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/a"
-
-    @staticmethod
-    def division_xpath_drop_menu():
-        return "//div[@class='container']/div[@class='row']/\
-        div[@class='col-lg-offset-2 col-md-offset-1 col-lg-6 col-md-7 col-sm-8 col-xs-12 menu-site']/\
-        div[@id='bs-example-navbar-collapse-1']/ul/li[@class='menu-profile']/a[@class='ng-binding']"
 
     @staticmethod
     def division_xpath_my_profile():
@@ -82,21 +69,19 @@ class GeneralPart(object):
     def division_xpath_help_page():
         return "*[pr_test='UserInfo']"
 
-    def click_logout(self, logout='LogOut'):
-        pr_logout_click = None
-        for pr_logout in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):
-            if logout in pr_logout.get_attribute('pr_test'):
-                pr_logout_click = pr_logout
-        pr_logout_click.click()
+    def click_login_or_logout(self, login_or_logout='LogOut'):
+        pr_login_or_logout_click = None
+        for pr_login_or_logout in self.driver.find_elements_by_css_selector("*[pr_test"):
+            if login_or_logout in pr_login_or_logout.get_attribute('pr_test'):
+                pr_login_or_logout_click = pr_login_or_logout
+        pr_login_or_logout_click.click()
 
-    def click_login(self, login='LogIn'):
-        pr_login_click = None
-        for pr_login in self.driver.find_elements_by_css_selector("*[pr_test='LogIn']"):
-            if login in pr_login.get_attribute('pr_test'):
-                pr_login_click = pr_login
-        pr_login_click.click()
-
-
+    def click_news_or_favo_or_subs(self, news_or_favo_or_subs='UserSubscriptions'):
+        pr_news_or_favo_or_subs_click = None
+        for pr_news_or_favo_or_subs in self.driver.find_elements_by_css_selector("*[pr_test"):
+            if news_or_favo_or_subs in pr_news_or_favo_or_subs.get_attribute('pr_test'):
+                pr_news_or_favo_or_subs_click = pr_news_or_favo_or_subs
+        pr_news_or_favo_or_subs_click.click()
 
     # def click_my_profile_or_logout(self, profile_or_logout='profile'):
     #     href_click = None
@@ -114,6 +99,18 @@ class GeneralPart(object):
         # return testing_page
 
     # def get_current_division_name(self):
-    #     return self.driver.find_element_by_xpath("//div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav']"
+    #     return self.driver.find_element_by_xpath
+    # ("//div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav']"
     #                                              "/li/a[@id='navigation_selected_division']").text
+
+        # @staticmethod
+    # def division_xpath_drop_menu():
+    #     return "//div[@class='container']/div[@class='row']/\
+    #     div[@class='col-lg-offset-2 col-md-offset-1 col-lg-6 col-md-7 col-sm-8 col-xs-12 menu-site']/\
+    #     div[@id='bs-example-navbar-collapse-1']/ul/li[@class='menu-profile']/a[@class='ng-binding']"
+
+    #     @staticmethod
+    # def division_xpath_logination():
+    #     return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
+    #     [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/a"
 

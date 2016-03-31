@@ -24,8 +24,9 @@ class Subscriptions(GeneralPart):
         return 'subscriptions'
 
     def test_subscriptions(self):
-        self.driver.find_elements_by_css_selector(self.get_division_xpath_readline)[0].click()
-        self.driver.find_elements_by_css_selector(self.get_division_xpath_subscriptions)[0].click()
+
+        self.click_news_or_favo_or_subs(news_or_favo_or_subs='ReadLine')
+        self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserSubscriptions')
 
     def getfields(self, **kwarg):
         get_ids = set()
