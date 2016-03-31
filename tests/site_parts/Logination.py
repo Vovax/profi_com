@@ -46,7 +46,7 @@ class Logination(GeneralPart):
         form = self.driver.find_element_by_id('signIn')
         form.submit()
 
-        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
+        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_my_profile).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
         self.click_my_profile_or_logout(profile_or_logout='logout')
@@ -64,7 +64,7 @@ class Logination(GeneralPart):
         form = self.driver.find_element_by_name('login')
         form.submit()
 
-        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
+        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_my_profile).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
         self.click_my_profile_or_logout(profile_or_logout='logout')
@@ -83,7 +83,7 @@ class Logination(GeneralPart):
         form.submit()
         time.sleep(3)
 
-        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
+        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_my_profile).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
         self.click_my_profile_or_logout(profile_or_logout='logout')
@@ -101,7 +101,7 @@ class Logination(GeneralPart):
         form = self.driver.find_element_by_name('SI')
         form.submit()
 
-        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
+        assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_my_profile).text,\
             'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)
 
         self.click_my_profile_or_logout(profile_or_logout='logout')

@@ -7,8 +7,7 @@ class GeneralPart(object):
         self.driver = driver
         self.get_division_xpath_log_in = self.division_xpath_log_in()
         self.get_division_xpath_log_out = self.division_xpath_log_out()
-        self.get_division_xpath_header = self.division_xpath_header()
-        self.get_division_xpath_drop_menu = self.division_xpath_drop_menu()
+        # self.get_division_xpath_drop_menu = self.division_xpath_drop_menu()
         self.get_division_xpath_my_profile = self.division_xpath_my_profile()
         self.get_division_xpath_login_by_google = self.division_xpath_login_by_google()
         self.get_division_xpath_login_by_facebook = self.division_xpath_login_by_facebook()
@@ -20,19 +19,6 @@ class GeneralPart(object):
         self.get_division_xpath_help_page = self.division_xpath_help_page()
         self.get_division_select_registration = self.division_select_registration()
         self.get_division_select_confirm_link = self.division_select_confirm_link()
-
-
-    def get_testing_page(self, elem_number=0):
-        self.driver.get(config.PROFIREADER_URL)
-        testing_page = self.driver.find_elements_by_xpath(
-            "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/div\
-        [@class='collapse navbar-collapse']/ul[@class='top-menu']/li/a")[elem_number].get_attribute('href')
-        # testing_page = self.driver.find_elements_by_css_selector("div.well > div[class$='collaps'] > ul > li > a")
-        return testing_page
-
-    # def get_current_division_name(self):
-    #     return self.driver.find_element_by_xpath("//div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav']"
-    #                                              "/li/a[@id='navigation_selected_division']").text
 
     @staticmethod
     def division_select_confirm_link():
@@ -52,13 +38,6 @@ class GeneralPart(object):
         return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
         [@class='content-block']/div[@class='ng-scope']/div[@class='via-social']/a"
 
-
-    @staticmethod
-    def division_xpath_header():
-        return "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/div\
-        [@class='container-fluid']/div[@class='collapse navbar-collapse']/ul[@class='top-menu']/a[@class='read_btn']"
-
-
     @staticmethod
     def division_xpath_drop_menu():
         return "//div[@class='container']/div[@class='row']/\
@@ -68,13 +47,6 @@ class GeneralPart(object):
     @staticmethod
     def division_xpath_my_profile():
         return "*[pr_test='UserProfile']"
-
-    # def click_my_profile_or_logout(self, profile_or_logout='profile'):
-    #     href_click = None
-    #     for href in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):
-    #         if profile_or_logout in href.get_attribute('href'):
-    #             href_click = href
-    #     href_click.click()
 
     @staticmethod
     def division_xpath_log_out():
@@ -111,6 +83,22 @@ class GeneralPart(object):
     def division_xpath_help_page():
         return "*[pr_test='UserInfo']"
 
+    # def click_my_profile_or_logout(self, profile_or_logout='profile'):
+    #     href_click = None
+    #     for href in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):
+    #         if profile_or_logout in href.get_attribute('href'):
+    #             href_click = href
+    #     href_click.click()
 
+    # def get_testing_page(self, elem_number=0):
+    #     self.driver.get(config.PROFIREADER_URL)
+    #     testing_page = self.driver.find_elements_by_xpath(
+    #         "//nav[@class='navbar navbar-default widewrapper  ng-scope']/div[@class='container']/div\
+    #     [@class='collapse navbar-collapse']/ul[@class='top-menu']/li/a")[elem_number].get_attribute('href')
+    #     testing_page = self.driver.find_elements_by_css_selector("div.well > div[class$='collaps'] > ul > li > a")
+        # return testing_page
 
+    # def get_current_division_name(self):
+    #     return self.driver.find_element_by_xpath("//div[@class='collapse navbar-collapse']/ul[@class='nav navbar-nav']"
+    #                                              "/li/a[@id='navigation_selected_division']").text
 

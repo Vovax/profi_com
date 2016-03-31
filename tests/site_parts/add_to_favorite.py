@@ -38,15 +38,15 @@ class Add_to_favorite(GeneralPart):
         # print(like)
         # time.sleep(5)
 
-        while True:
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(10)
-            new_Height = self.driver.execute_script("return document.body.scrollHeight")
-            if old_pos != new_Height:
-                old_pos = new_Height
-            else:
-                return False
-            print(new_Height)
+        # while True:
+        #     self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        #     time.sleep(10)
+        #     new_Height = self.driver.execute_script("return document.body.scrollHeight")
+        #     if old_pos != new_Height:
+        #         old_pos = new_Height
+        #     else:
+        #         return False
+        #     print(new_Height)
 
     def click_favorite(self):
         # WebDriverWait wait = new WebDriverWait(driver, 15)
