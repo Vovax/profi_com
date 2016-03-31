@@ -32,7 +32,6 @@ class GeneralPart(object):
     def division_select_registration():
         return "*[pr-test='TabSignUp']"
 
-
     @staticmethod
     def division_xpath_logination():
         return "//div[@class='container widewrapper']/div[@class='auth-form ng-scope']/div\
@@ -82,6 +81,22 @@ class GeneralPart(object):
     @staticmethod
     def division_xpath_help_page():
         return "*[pr_test='UserInfo']"
+
+    def click_logout(self, logout='LogOut'):
+        pr_logout_click = None
+        for pr_logout in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):
+            if logout in pr_logout.get_attribute('pr_test'):
+                pr_logout_click = pr_logout
+        pr_logout_click.click()
+
+    def click_login(self, login='LogIn'):
+        pr_login_click = None
+        for pr_login in self.driver.find_elements_by_css_selector("*[pr_test='LogIn']"):
+            if login in pr_login.get_attribute('pr_test'):
+                pr_login_click = pr_login
+        pr_login_click.click()
+
+
 
     # def click_my_profile_or_logout(self, profile_or_logout='profile'):
     #     href_click = None
