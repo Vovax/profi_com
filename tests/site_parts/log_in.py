@@ -40,10 +40,10 @@ class Log_in (GeneralPart):
         form = self.driver.find_element_by_class_name('submit-form')
         form.submit()
 
-        logedIn = self.driver.find_elements_by_css_selector("*[pr_test='LogOut']")[0].text
+        # logedIn = self.driver.find_elements_by_css_selector("*[pr_test='LogOut']")[0].text
         # print(logedIn)
 
-        assert 'Log out' == logedIn, "Can't Log In"
+        # assert 'Log out' == logedIn, "Can't Log In"
 
         # assert self.user_name in self.driver.find_element_by_xpath(self.get_division_xpath_drop_menu).text,\
         #     'Can"t find {user}, in {page}'.format(user=self.user_name, page=self.driver.current_url)

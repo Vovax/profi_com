@@ -29,3 +29,4 @@ SQUIRREL_FRAME = 'https://mail.ntaxa.com/src/right_main.php'
 
 MAIL_LOGIN = 'https://accounts.google.com/login#identifier'
 MAIL_INBOX = 'https://mail.google.com/mail/u/0/'
+COMPANY_LIST = 'http://profireader.com/company/'

@@ -17,6 +17,7 @@ class GeneralPart(object):
         self.get_division_xpath_help_page = self.division_xpath_help_page()
         self.get_division_select_registration = self.division_select_registration()
         self.get_division_select_confirm_link = self.division_select_confirm_link()
+        self.get_division_select_companies_list = self.division_select_companies_list()
 
     @staticmethod
     def division_select_confirm_link():
@@ -29,6 +30,10 @@ class GeneralPart(object):
     @staticmethod
     def division_select_registration():
         return "*[pr-test='TabSignUp']"
+
+    @staticmethod
+    def division_select_companies_list():
+        return "*[pr_test='CompaniesList']"
 
     @staticmethod
     def division_xpath_my_profile():
@@ -82,6 +87,32 @@ class GeneralPart(object):
             if news_or_favo_or_subs in pr_news_or_favo_or_subs.get_attribute('pr_test'):
                 pr_news_or_favo_or_subs_click = pr_news_or_favo_or_subs
         pr_news_or_favo_or_subs_click.click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # def click_my_profile_or_logout(self, profile_or_logout='profile'):
     #     href_click = None
