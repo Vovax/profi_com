@@ -1,7 +1,7 @@
 from .general_part import GeneralPart
+import random as rand
 import config
 import time
-import random as rand
 
 
 class Companies(GeneralPart):
@@ -41,12 +41,12 @@ class Companies(GeneralPart):
             while count < a_length:
                 company = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")[count:]
                 a_length = len(company) if count == 0 else a_length
+                count += 1
                 if count > 5:
-                    time.sleep(7)
                     print('ewrrwerwer')
                     self.driver.execute_script("window.scrollTo(0,document.body.scrollHeight);")
-                    time.sleep(7)
-                count += 1
+                    time.sleep(2)
+                    print(company)
                 company[0].click()
                 time.sleep(5)
 
