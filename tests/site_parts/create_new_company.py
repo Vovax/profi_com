@@ -67,22 +67,32 @@ class Create_new_company(GeneralPart):
 
     def get_own_company(self, elem=0):
 
-        company = self.driver.find_elements_by_css_selector("*[pr-test='JoinedCompany']")
+        a_length = 1
+        count = 0
 
-        own_or_joined = company[elem].text
-        print(own_or_joined)
+        while count < a_length:
+            company = self.driver.find_elements_by_css_selector("*[pr-test='JoinedCompany']")[count:]
+            a_length = len(company) if count == 0 else a_length
+            own_or_joined = company[elem].text
+            print(own_or_joined, '2222222')
+            count += 1
+            # if own_or_joined == 'OWN COMPANY':
+            #         company[0].click()
+            self.click_own_company(company, own_or_joined)
+
+    def click_own_company(self, company, own_or_joined):
         if own_or_joined == 'OWN COMPANY':
                     company[0].click()
-                    time.sleep(10)
 
-    def own_company_edit(self):
-        company_edit = self.driver.find_elements_by_css_selector("*[pr-test='CompanyEdit']")
-        company_edit[0].click()
 
-        upload_image = self.driver.find_element_by_name('file')
-        print(upload_image)
-        upload_image.send_keys("/Users/apple/Desktop/PROJECTS/business.jpg")
-        time.sleep(5)
+    def own_company_edit(self, elem=0):
+        # company_edit = self.driver.find_elements_by_css_selector("*[pr-test='CompanyEdit']")
+        # company_edit[0].click()
+        #
+        # upload_image = self.driver.find_element_by_name('file')
+        # print(upload_image)
+        # upload_image.send_keys("/Users/apple/Desktop/PROJECTS/business.jpg")
+        # time.sleep(5)
 
         a_length = 1
         count = 0
@@ -90,8 +100,8 @@ class Create_new_company(GeneralPart):
         while count < a_length:
             company = self.driver.find_elements_by_css_selector("*[pr-test='JoinedCompany']")[count:]
             a_length = len(company) if count == 0 else a_length
-            own_or_joined = company[0].text
-            print(own_or_joined)
+            own_or_joined = company[elem].text
+            print(own_or_joined, '2222222')
             count += 1
             if own_or_joined == 'OWN COMPANY':
                     company[0].click()
