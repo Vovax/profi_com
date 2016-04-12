@@ -69,3 +69,11 @@ class News(GeneralPart):
             assert news_article in subs_article, "Portal Name {subs_article} from 'Subsciptions' does not equal to " \
                                                  "Article Portal {news_article} from 'News', in page {page}"\
                 .format(subs_article=subs_article, news_article=news_article, page=self.driver.current_url)
+
+
+        # like = self.driver.find_elements_by_css_selector("*[pr-test='FovoriteBtn']")
+        # print(like)
+        # for x in range(0, len(like)):
+        #     print(x)
+        #     if like[x].is_displayed():
+        #         like[x].click()
