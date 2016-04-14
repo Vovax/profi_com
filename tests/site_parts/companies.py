@@ -1,14 +1,9 @@
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.ui import WebDriverWait
 from .general_part import GeneralPart
-import random as rand
 import config
 import time
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 
 
 class Companies(GeneralPart):
@@ -21,36 +16,66 @@ class Companies(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_companies()
-        # self.companies_click()
-        # self.companies_scroll()
-        # self.get_own_company()
 
     @classmethod
     def __repr__(cls):
         return 'companies'
 
-    def test_companies(self, random=None):
-
+    def test_companies(self, page=0):
         self.driver.find_elements_by_css_selector(self.get_division_select_companies_list)[0].click()
-        time.sleep(2)
+        list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
+        last_click = self.onClick(list_comp, 0, 0)
+        page += 1
+        self.scrollTo(page)
+        time.sleep(3)
+        while True:
+            list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
+            last_click = self.onClick(list_comp, last_click, page)
+            page += 1
+            self.scrollTo(page)
+            list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
+            time.sleep(3)
+            if last_click == len(list_comp):
+                return False
 
-        a_length = 1
-        count = 0
+    def scrollTo(self, pages, old_pos=0):
+        while True:
+            new_Height = self.driver.execute_script("return document.body.scrollHeight")
+            if old_pos != new_Height and pages != 0:
+                self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                time.sleep(3)
+                old_pos = new_Height
+                pages -= 1
+            else:
+                return False
 
-        while count < a_length:
-            company = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")[count:]
-            a_length = len(company) if count == 0 else a_length
-            count += 1
-            # if count > 5:
-            #     print('ewrrwerwer')
-            #     self.driver.execute_script("window.scrollTo(0,document.body.scrollHeight);")
-            #     time.sleep(2)
-            #     print(company)
-            company[0].click()
+    def onClick(self, list_comp, last_click, page):
+        for e in range(last_click, len(list_comp)):
+            self.scrollTo(page)
+            company = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")[e]
+            try:
+                self.wait_until_visible_then_click(company)
+            except WebDriverException:
+                self.wait_until_visible_then_click(company)
             time.sleep(5)
             self.driver.get(self.company_list)
+        return len(list_comp)
+
+    def wait_until_visible_then_click(self, element):
+        element = WebDriverWait(self.driver, 5, poll_frequency=.2).until(EC.visibility_of(element))
+        element.click()
 
 
+
+
+        # while count < a_length:
+        #     company = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")[count:]
+        #     a_length = len(company) if count == 0 else a_length
+        #     count += 1
+        #     company[0].click()
+        #     # time.sleep(5)
+        #     self.driver.get(self.company_list)
+        #     # time.sleep(5)
 
         # for i in range(0, 9):
         #     companies = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
@@ -97,14 +122,9 @@ class Companies(GeneralPart):
         #         company[0].click()
         #         time.sleep(5)
 
-                # self.driver.get(self.company_list)
-
     # def companies_click(self, old_pos=0):
 
         # self.driver.find_elements_by_css_selector(self.get_division_select_companies_list)[0].click()
-
-
-
 
         # while True:
         #     self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -137,10 +157,6 @@ class Companies(GeneralPart):
         #         company[0].click()
         #         self.driver.get(self.company_list)
 
-        # self.driver.find_e
-
-
-
         # a_length = 1
         # count = 0
         # while count < a_length:
@@ -161,13 +177,10 @@ class Companies(GeneralPart):
         #     self.driver.get(self.company_list)
 
         # tit = [i.text for i in company]
-        # print(tit)
-
 
         # company = self.driver.find_elements_by_css_selector("*[pr-test='JoinedCompany']")
 
         # self.driver.ActionChains(self.driver).move_to_element(company).click(company).perform()
-
 
         # for i in company:
         #     # print(i.text, '0000000')
@@ -179,35 +192,30 @@ class Companies(GeneralPart):
     #     self.driver.get(self.company_list)
     #     time.sleep(3)
 
-
-
-
-
-    def companies_scroll(self, old_pos=0):
-        self.driver.get(self.company_list)
-
-        while True:
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(10)
-            new_Height = self.driver.execute_script("return document.body.scrollHeight")
-            if old_pos != new_Height:
-                old_pos = new_Height
-            else:
-                return False
-            print(new_Height)
-
-    def get_own_company(self, elem=0):
-
-        a_length = 1
-        count = 0
-
-        while count < a_length:
-            company = self.driver.find_elements_by_css_selector("*[pr-test='JoinedCompany']")[count:]
-            a_length = len(company) if count == 0 else a_length
-            own_or_joined = company[elem].text
-            print(own_or_joined, '00000')
-            count += 1
-            # self.click_own_company(company, own_or_joined)
+    # def companies_scroll(self, old_pos=0):
+    #     self.driver.get(self.company_list)
+    #
+    #     while True:
+    #         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    #         time.sleep(10)
+    #         new_Height = self.driver.execute_script("return document.body.scrollHeight")
+    #         if old_pos != new_Height:
+    #             old_pos = new_Height
+    #         else:
+    #             return False
+    #         print(new_Height)
+    #
+    # def get_own_company(self, elem=0):
+    #
+    #     a_length = 1
+    #     count = 0
+    #
+    #     while count < a_length:
+    #         company = self.driver.find_elements_by_css_selector("*[pr-test='JoinedCompany']")[count:]
+    #         a_length = len(company) if count == 0 else a_length
+    #         own_or_joined = company[elem].text
+    #         print(own_or_joined, '00000')
+    #         count += 1
     #
     # def click_own_company(self, company, own_or_joined):
     #     if own_or_joined == 'OWN COMPANY':
