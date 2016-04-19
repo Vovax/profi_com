@@ -13,29 +13,39 @@ class Companies(GeneralPart):
         self.driver = driver
         self.testing_page = testing_page
         self.company_list = company_list
+    props = ['table', 'list']
 
     def __call__(self, *args, **kwargs):
-        self.test_companies()
+        for prop in Companies.props:
+            self.test_companies(prop)
 
     @classmethod
     def __repr__(cls):
         return 'companies'
 
-    def test_companies(self, page=0):
+    def test_companies(self, param):
+        if param == 'table':
+            selector = "*[pr-test='CompanyThumbnail']"
+        else:
+            selector = "*[pr-test='JoinOrOwnCompany']"
+        page = 0
         self.driver.find_elements_by_css_selector(self.get_division_select_companies_list)[0].click()
-        time.sleep(3)
-        list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
-        last_click = self.onClick(list_comp, 0, 0)
+        if param == 'list':
+            self.driver.find_elements_by_css_selector("*[pr-test='ListOfCompanies']")[0].click()
+            time.sleep(3)
+
+        list_comp = self.driver.find_elements_by_css_selector(selector)
+        last_click = self.onClick(list_comp, 0, 0, param, selector)
         page += 1
         self.scrollTo(page)
         time.sleep(3)
         while True:
-            list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
-            last_click = self.onClick(list_comp, last_click, page)
+            list_comp = self.driver.find_elements_by_css_selector(selector)
+            last_click = self.onClick(list_comp, last_click, page, param, selector)
             page += 1
             self.scrollTo(page)
             time.sleep(3)
-            list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
+            list_comp = self.driver.find_elements_by_css_selector(selector)
             time.sleep(3)
             if last_click == len(list_comp):
                 return False
@@ -51,25 +61,27 @@ class Companies(GeneralPart):
             else:
                 return False
 
-    def onClick(self, list_comp, last_click, page):
+    def onClick(self, list_comp, last_click, page, param, selector):
         for e in range(last_click, len(list_comp)):
             self.scrollTo(page)
             time.sleep(3)
-            company = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")[e]
+            company = self.driver.find_elements_by_css_selector(selector)[e]
             try:
                 self.wait_until_visible_then_click(company)
             except WebDriverException:
                 self.wait_until_visible_then_click(company)
             time.sleep(3)
             self.driver.get(self.company_list)
-            time.sleep(3)
+
+            if param == 'list':
+                self.driver.find_elements_by_css_selector("*[pr-test='ListOfCompanies']")[0].click()
+                time.sleep(3)
+
         return len(list_comp)
 
     def wait_until_visible_then_click(self, element):
         element = WebDriverWait(self.driver, 5, poll_frequency=.2).until(EC.visibility_of(element))
         element.click()
-
-
 
 
         # while count < a_length:
