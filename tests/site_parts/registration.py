@@ -12,7 +12,7 @@ class Registration(GeneralPart):
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, new_frame=config.SQUIRREL_FRAME,
                  email_confirm=config.CONFIRM['email'], keypass_confirm=config.CONFIRM['pass'],
                  name_confirm=config.CONFIRM['name'], registration='Sign up',
-                 user_email=('p11ame@profi.ntaxa.com'), user_name=('myname'), user_pass=('1')):
+                 user_email=('iam@profi.ntaxa.com'), user_name=('how'), user_pass=('1')):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
@@ -29,7 +29,7 @@ class Registration(GeneralPart):
         self.test_registration()
         self.squirell_mail_login()
         self.get_message_link()
-        self.new_user_login()
+        self.accept_licence()
         self.log_out()
 
     @classmethod
@@ -113,6 +113,8 @@ class Registration(GeneralPart):
 
         self.driver.get(confirm_link)
 
+    def accept_licence(self):
+
         print('Hello,' + ' ' + self.user_name + '!')
 
         assert 'Hello,' + ' ' + self.user_name + '!' in self.driver.page_source, \
@@ -126,11 +128,19 @@ class Registration(GeneralPart):
         assert conf_text == confirmed or conf_text in self.driver.page_source, "Not Confirmed User {user}"\
             .format(user=self.user_email)
 
-    def new_user_login(self):
+        #Почніть звідси!
+        self.driver.find_elements_by_css_selector("*[pr-test='ConfirmEmail']")[0].click()
+        time.sleep(3)
 
-        self.click_login_or_logout(login_or_logout='LogIn')
+        self.driver.find_elements_by_css_selector("*[pr-test='HeaderAcceptLicence']")[0].click()
+        time.sleep(3)
+
+        licence_text = self.driver.find_elements_by_css_selector("*[pr-test='LicenceText']")[0].text
+
+        assert 'Licence text' in licence_text, "Can't find Licence Text {licence}".format(licence=licence_text)
 
         self.driver.find_elements_by_css_selector("*[pr-test='AcceptLicence']")[0].click()
+        time.sleep(3)
 
         user_header_name = self.driver.find_elements_by_css_selector("*[pr_test='UserProfile']")[0].text
 
@@ -138,24 +148,21 @@ class Registration(GeneralPart):
                                                    "{profile_name}, page {page}"\
             .format(page=self.driver.current_url, header_name=user_header_name, profile_name=self.user_name)
 
-        log_out = self.driver.find_elements_by_css_selector("*[pr_test='LogOut']")
-        log_out_txt = log_out[0].text
-
-        assert 'Log out' == log_out_txt, "Can't find Log out button"
-
     def log_out(self):
 
-        # Assert this = self.click_login_or_logout(login_or_logout='LogOut')
+        time.sleep(7)
+        self.click_login_or_logout(login_or_logout='LogOut')
 
-        action = ActionChains(self.driver)
-        log_out_btn = self.driver.find_element_by_css_selector("*[pr_test='LogOut']")
-        action.move_to_element(log_out_btn).perform()
-        time.sleep(5)
-        log_out_btn.click()
+        # action = ActionChains(self.driver)
+        # log_out_btn = self.driver.find_element_by_css_selector("*[pr_test='LogOut']")
+        # action.move_to_element(log_out_btn).perform()
+        # time.sleep(5)
+        # log_out_btn.click()
 
-        login_btn_visibility = self.driver.find_elements_by_css_selector("*[pr_test='LogIn']")[0].text
+        login_btn_visibility = self.driver.find_elements_by_css_selector("*[pr_test='LogIn']")[0].get_attribute('href')
 
-        assert 'Login' == login_btn_visibility, "User {user} can't finally Log out".format(user=self.user_name)
+        print(login_btn_visibility)
+        assert 'login_signup' in login_btn_visibility, "User {user} can't finally Log out".format(user=self.user_name)
 
 
 

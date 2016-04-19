@@ -23,6 +23,7 @@ class Companies(GeneralPart):
 
     def test_companies(self, page=0):
         self.driver.find_elements_by_css_selector(self.get_division_select_companies_list)[0].click()
+        time.sleep(3)
         list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
         last_click = self.onClick(list_comp, 0, 0)
         page += 1
@@ -33,6 +34,7 @@ class Companies(GeneralPart):
             last_click = self.onClick(list_comp, last_click, page)
             page += 1
             self.scrollTo(page)
+            time.sleep(3)
             list_comp = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
             time.sleep(3)
             if last_click == len(list_comp):
@@ -52,13 +54,15 @@ class Companies(GeneralPart):
     def onClick(self, list_comp, last_click, page):
         for e in range(last_click, len(list_comp)):
             self.scrollTo(page)
+            time.sleep(3)
             company = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")[e]
             try:
                 self.wait_until_visible_then_click(company)
             except WebDriverException:
                 self.wait_until_visible_then_click(company)
-            time.sleep(5)
+            time.sleep(3)
             self.driver.get(self.company_list)
+            time.sleep(3)
         return len(list_comp)
 
     def wait_until_visible_then_click(self, element):
