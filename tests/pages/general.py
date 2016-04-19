@@ -11,14 +11,14 @@ from ..site_parts.registration import Registration
 from ..site_parts.search_and_subscribe import Search_and_Subscribe
 from ..site_parts.add_to_favorite import Add_to_favorite
 from ..site_parts.companies import Companies
-from ..site_parts.create_new_company import Create_new_company
+from ..site_parts.create_edit_new_company import Create_edit_new_company
 
 
 class General(object):
 
     dependences = ('logination', 'registration', 'log_in', 'my_profile', 'subscriptions', 'news', 'help_page',
                    'loged_in_user', 'header', 'search_and_subscribe', 'add_to_favorite', 'companies',
-                   'create_new_company')
+                   'create_edit_new_company')
 
     def __init__(self, dependences=dependences, driver=None, device='PC', testing_page=PROFIREADER_URL):
         # print('general')
@@ -35,7 +35,7 @@ class General(object):
         self.driver.implicitly_wait(3)
 
     def call_dependences(self, dependences):
-        classes = (Log_in, Companies, Help_page, Create_new_company, Subscriptions, Add_to_favorite, Logination,  My_profile, News, Registration, Search_and_Subscribe)
+        classes = (Log_in, Create_edit_new_company, Help_page, Companies, Subscriptions, Add_to_favorite, Logination,  My_profile, News, Registration, Search_and_Subscribe)
 
         [a() for a in map(lambda cls: cls(driver=self.driver),
                           filter(lambda cls: cls.__repr__() in dependences, classes))]
