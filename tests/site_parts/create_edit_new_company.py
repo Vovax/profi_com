@@ -2,27 +2,27 @@ from .general_part import GeneralPart
 import random as rand
 import config
 import time
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import WebDriverException
+
 
 class Create_edit_new_company(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, company_list=config.COMPANY_LIST,
-                 company_name='Random', text='Fest', e_mail='we@1.com', re_mail='qweqw@qe.com'):
+                 company_name='Fest', e_mail='we@1.com', re_mail='qweqw@qe.com'):
         super().__init__(driver=driver)
         self.driver = driver
         self.testing_page = testing_page
         self.company_list = company_list
         self.company_name = company_name
-        self.text = text
         self.e_mail = e_mail
         self.re_mail = re_mail
-
-
 
     def __call__(self, *args, **kwargs):
         self.test_create_new_company()
         self.scroll_all()
         self.get_own_company()
-        # self.own_company_edit()
 
     @classmethod
     def __repr__(cls):
@@ -35,7 +35,7 @@ class Create_edit_new_company(GeneralPart):
 
         # name = self.driver.find_elements_by_css_selector("*[pr-test='InputCompanyName']")
         name = self.driver.find_element_by_name('company_name')
-        name.send_keys(self.text)
+        name.send_keys(self.company_name)
         # country = self.driver.find_elements_by_css_selector("*[pr-test='InputCompanyCountry']")
         country = self.driver.find_element_by_name('company_country')
         country.send_keys(self.text)
@@ -85,10 +85,13 @@ class Create_edit_new_company(GeneralPart):
         self.click_own()
 
     def click_own(self):
+        time.sleep(3)
+        element_by = "//*[contains(text(),"+"'"+self.company_name+"'"+")]"
+        print(element_by)
+        own = self.driver.find_elements_by_xpath(element_by)
+        print(own[0].text)
 
-        text = 'Fest'
-        own = self.driver.find_elements_by_xpath("//*[contains(text(),"+text+")]")
-        print(own)
+        time.sleep(3)
         own[0].click()
 
         self.edit_own()
@@ -98,18 +101,22 @@ class Create_edit_new_company(GeneralPart):
         self.driver.find_elements_by_css_selector("*[pr-test='EditCompanyProfile']")[0].click()
 
         email = self.driver.find_element_by_name("company_email")
+        email.clear()
+        time.sleep(3)
         email.send_keys(self.re_mail)
-
+        time.sleep(3)
         self.driver.find_elements_by_css_selector("*[pr-test='SaveCompanyProfile']")[0].click()
 
         company_email = self.driver.find_elements_by_css_selector("*[pr-test='CompanyEmail']")[0].text
-
+        print(company_email)
         assert self.re_mail in company_email, "Can't edit company {comp_name} profile"\
             .format(comp_name=self.company_name)
 
 
 
 
+
+        # self.driver.get(self.company_list)
 
         # company = self.driver.find_elements_by_css_selector("*[pr-test='CompanyThumbnail']")
         # print(company[1].text)

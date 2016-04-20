@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
 
 
 class Add_to_favorite(GeneralPart):
@@ -18,7 +19,7 @@ class Add_to_favorite(GeneralPart):
         self.driver = driver
         # self.actions = []
         self.testing_page = testing_page
-
+    props = ['favorite', 'not favorite']
 
     def __call__(self, *args, **kwargs):
         self.test_add_to_favorite()
@@ -38,38 +39,92 @@ class Add_to_favorite(GeneralPart):
         # print(like)
         # time.sleep(5)
 
-        # while True:
-        #     self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        #     time.sleep(10)
-        #     new_Height = self.driver.execute_script("return document.body.scrollHeight")
-        #     if old_pos != new_Height:
-        #         old_pos = new_Height
-        #     else:
-        #         return False
-        #     print(new_Height)
+        # self.scroll_all()
 
     def click_favorite(self):
-        # WebDriverWait wait = new WebDriverWait(driver, 15)
-        # wait.until(EC.element_to_be_clickable(By.CSS_SELECTOR, "*[pr-test='AddToFavoriteButton'])
 
-        # try:
-        #     button = self.driver.wait.until(EC.element_to_be_clickable(
-        #         (By.CSS_SELECTOR, "*[pr-test='AddToFavoriteButton']")))
-        #     button.click()
-        # except TimeoutException:
-        #     print("Button not found in ...")
+        selector = self.driver.find_elements_by_css_selector("*[pr-like]")
 
-        # el = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-        #                                                                       "*[pr-test='AddToFavoriteButton']")))
-        favorite_btn = self.driver.find_elements_by_css_selector("*[pr-test='AddToFavoriteButton']")
-        # print(favorite_btn)
-        for i in favorite_btn:
-            print(i)
-            i.click()
-        # print(el)
-        time.sleep(10)
-        # el.click()
-        favorite_btn.click()
+        get_favorite = selector[0].get_attribute('pr-like')
+        print(get_favorite)
+
+        if get_favorite == 'NotFavorite':
+
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+                                                                             "*[pr-test='AddToFavorite']"))).click()
+
+            get_article_id = self.driver.find_elements_by_css_selector("*[pr-article-id]")[0]\
+                .get_attribute('pr-article-id')
+            print(get_article_id)
+
+
+
+
+
+        # favorite = self.driver.find_elements_by_css_selector("*[pr-like='Favorite']")
+        #
+        # not_favorite = self.driver.find_elements_by_css_selector("*[pr-like='NotFavorite']")
+        #
+        # if param == 'favorite':
+        #     selector = favorite
+        # else:
+        #     selector = not_favorite
+        #
+        #
+        #
+        # WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
+        #                                                                  "*[pr-test='AddToFavorite']"))).click()
+        # time.sleep(3)
+
+    # def click_Favorite_or_NotFavorite(self, favo_or_not_favo='Favorite'):
+    #     pr_favo_or_not_favo_click = None
+    #     for pr_favo_or_not_favo in self.driver.find_elements_by_css_selector("*[pr-like"):
+    #         if favo_or_not_favo in pr_favo_or_not_favo.get_attribute('pr-like'):
+    #             pr_favo_or_not_favo_click = pr_favo_or_not_favo
+    #     pr_favo_or_not_favo_click.click()
+
+
+
+
+        # likes = self.driver.find_elements_by_css_selector("*[pr-test='AddToFavorite']")
+        # for e in range(0, len(likes)):
+        #     time.sleep(10)
+        #     like = self.driver.find_elements_by_css_selector(likes)[e]
+
+        # action = ActionChains(self.driver)
+        # # like = self.driver.find_element_by_css_selector("*[pr-test='AddToFavorite']")
+        # print(element)
+        # action.move_to_element(element).perform()
+        # time.sleep(10)
+        # element.click()
+
+
+
+
+
+        # like = self.driver.find_elements_by_css_selector("*[pr-test='AddToFavorite']")
+        # print(like)
+        # for x in range(0, len(like)):
+        #     print(x)
+        #     if like[x].is_displayed():
+        #         like[x].click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         # action = ActionChains(self.driver)
         # favo_btn = self.driver.find_elements_by_css_selector("*[pr-test='AddToFavoriteButton']")

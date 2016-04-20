@@ -1,4 +1,5 @@
 import config
+import time
 
 
 class GeneralPart(object):
@@ -88,7 +89,16 @@ class GeneralPart(object):
                 pr_news_or_favo_or_subs_click = pr_news_or_favo_or_subs
         pr_news_or_favo_or_subs_click.click()
 
+    def scroll_all(self, old_pos=0):
 
+        while True:
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(5)
+            new_Height = self.driver.execute_script("return document.body.scrollHeight")
+            if old_pos != new_Height:
+                old_pos = new_Height
+            else:
+                return False
 
 
 
