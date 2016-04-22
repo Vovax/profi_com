@@ -9,15 +9,16 @@ from ..site_parts.my_profile import My_profile
 from ..site_parts.help_page import Help_page
 from ..site_parts.registration import Registration
 from ..site_parts.search_and_subscribe import Search_and_Subscribe
-from ..site_parts.add_to_favorite import Add_to_favorite
+from ..site_parts.add_to_bookmarks import AddToBookmarks
 from ..site_parts.companies import Companies
 from ..site_parts.create_edit_new_company import Create_edit_new_company
+from ..site_parts.article_likes import ArticleLikes
 
 
 class General(object):
 
     dependences = ('logination', 'registration', 'log_in', 'my_profile', 'subscriptions', 'news', 'help_page',
-                   'loged_in_user', 'header', 'search_and_subscribe', 'add_to_favorite', 'companies',
+                   'loged_in_user', 'header', 'search_and_subscribe', 'add_to_bookmarks', 'article_likes', 'companies',
                    'create_edit_new_company')
 
     def __init__(self, dependences=dependences, driver=None, device='PC', testing_page=PROFIREADER_URL):
@@ -35,7 +36,7 @@ class General(object):
         self.driver.implicitly_wait(3)
 
     def call_dependences(self, dependences):
-        classes = (Log_in, Add_to_favorite, Help_page, Create_edit_new_company, Companies, Subscriptions, Logination,  My_profile, News, Registration, Search_and_Subscribe)
+        classes = (Log_in, ArticleLikes, Help_page, AddToBookmarks, Create_edit_new_company, Companies, Subscriptions, Logination,  My_profile, News, Registration, Search_and_Subscribe)
 
         [a() for a in map(lambda cls: cls(driver=self.driver),
                           filter(lambda cls: cls.__repr__() in dependences, classes))]

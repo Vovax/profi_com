@@ -37,7 +37,7 @@ class News(GeneralPart):
         #     subs_article = title[elem].get_attribute("title")
         #     count += 1
 
-        self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserNews')
+        self.click_news_or_favo_or_subs(news_or_mark_or_subs='UserNews')
 
         while True:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")

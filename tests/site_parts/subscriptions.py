@@ -25,8 +25,8 @@ class Subscriptions(GeneralPart):
 
     def test_subscriptions(self):
 
-        self.click_news_or_favo_or_subs(news_or_favo_or_subs='ReadLine')
-        self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserSubscriptions')
+        self.click_news_or_mark_or_subs(news_or_mark_or_subs='ReadLine')
+        self.click_news_or_mark_or_subs(news_or_mark_or_subs='UserSubscriptions')
 
     def getfields(self, **kwarg):
         get_ids = set()

@@ -82,15 +82,14 @@ class GeneralPart(object):
                 pr_login_or_logout_click = pr_login_or_logout
         pr_login_or_logout_click.click()
 
-    def click_news_or_favo_or_subs(self, news_or_favo_or_subs='UserSubscriptions'):
-        pr_news_or_favo_or_subs_click = None
-        for pr_news_or_favo_or_subs in self.driver.find_elements_by_css_selector("*[pr_test"):
-            if news_or_favo_or_subs in pr_news_or_favo_or_subs.get_attribute('pr_test'):
-                pr_news_or_favo_or_subs_click = pr_news_or_favo_or_subs
-        pr_news_or_favo_or_subs_click.click()
+    def click_news_or_mark_or_subs(self, news_or_mark_or_subs='UserSubscriptions'):
+        pr_news_or_mark_or_subs_click = None
+        for pr_news_or_mark_or_subs in self.driver.find_elements_by_css_selector("*[pr_test"):
+            if news_or_mark_or_subs in pr_news_or_mark_or_subs.get_attribute('pr_test'):
+                pr_news_or_mark_or_subs_click = pr_news_or_mark_or_subs
+        pr_news_or_mark_or_subs_click.click()
 
     def scroll_all(self, old_pos=0):
-
         while True:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(5)

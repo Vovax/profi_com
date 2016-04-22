@@ -1,52 +1,31 @@
 from .general_part import GeneralPart
 import config
 import time
-from selenium.webdriver.common.keys import Keys
-import os, sys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.action_chains import Command
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import WebDriverException
 
 
-class Add_to_favorite(GeneralPart):
+class AddToBookmarks(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL):
         super().__init__(driver=driver)
         self.driver = driver
-        # self.actions = []
         self.testing_page = testing_page
-    props = ['favorite', 'not favorite']
 
     def __call__(self, *args, **kwargs):
-        self.test_add_to_favorite()
-        self.click_bookmark()
+        self.test_bookmarks()
 
     @classmethod
     def __repr__(cls):
-        return 'add_to_favorite'
+        return 'add_to_bookmarks'
 
-    def test_add_to_favorite(self, elem=0, old_pos=0):
+    def test_bookmarks(self):
 
-        self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserNews')
+        self.click_news_or_mark_or_subs(news_or_mark_or_subs='UserNews')
 
-        # favorite_btn = self.driver.find_element_by_css_selector("*[pr-test='AddToFavoriteButton']")
-        # print(favorite_btn)
-        # like = favorite_btn.get_attribute("pr-like")
-        # print(like)
-        # time.sleep(5)
-
-        # self.scroll_all()
-
-    def click_bookmark(self):
-
-        selector = self.driver.find_elements_by_css_selector("*[pr-like]")
-
-        get_favorite = selector[0].get_attribute('pr-like')
-        print(get_favorite)
+        selector = self.driver.find_elements_by_css_selector("*[pr-bookmark]")
+        get_bookmark = selector[0].get_attribute('pr-bookmark')
 
         def get_ids():
             bookmark_ids = set()
@@ -54,39 +33,65 @@ class Add_to_favorite(GeneralPart):
                 bookmark_ids.update({id.get_attribute("pr-article-id")})
             return bookmark_ids
 
-        if get_favorite == 'NotBookmark':
+        if get_bookmark == 'NotBookmarked':
 
             just_bookmarked_id = self.driver.find_elements_by_css_selector("*[pr-article-id]")[0]\
                 .get_attribute('pr-article-id')
             print(just_bookmarked_id)
 
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-                                                                             "*[pr-like='NotBookmark']"))).click()
+                                                                             "*[pr-bookmark='NotBookmarked']"))).click()
 
-            self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserFavorites')
+            self.click_news_or_mark_or_subs(news_or_mark_or_subs='UserBookmarks')
             time.sleep(3)
+
+            self.scroll_all()
 
             bookmark_ids = get_ids()
             print(bookmark_ids)
 
-            assert just_bookmarked_id in bookmark_ids, "how?"
+            assert just_bookmarked_id in bookmark_ids, "Can't bookmark article {id}".format(id=just_bookmarked_id)
 
-        elif get_favorite == 'Bookmark':
+        elif get_bookmark == 'Bookmarked':
 
             just_un_bookmarked_id = self.driver.find_elements_by_css_selector("*[pr-article-id]")[0]\
                 .get_attribute('pr-article-id')
             print(just_un_bookmarked_id)
 
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,
-                                                                             "*[pr-like='Bookmark']"))).click()
+                                                                             "*[pr-bookmark='Bookmarked']"))).click()
 
-            self.click_news_or_favo_or_subs(news_or_favo_or_subs='UserFavorites')
+            self.click_news_or_mark_or_subs(news_or_mark_or_subs='UserBookmarks')
             time.sleep(3)
+
+            self.scroll_all()
 
             bookmark_ids = get_ids()
             print(bookmark_ids)
 
-            assert just_un_bookmarked_id not in bookmark_ids, "what?"
+            assert just_un_bookmarked_id not in bookmark_ids, "Can't un bookmark article {id}"\
+                .format(id=just_un_bookmarked_id)
+
+        self.driver.get(self.testing_page)
+        time.sleep(3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -170,7 +175,7 @@ class Add_to_favorite(GeneralPart):
 
 
         # favorite_btn.click()
-        # user_favorites = self.driver.find_element_by_css_selector("*[pr-test='UserFavorites']")[0].click()
+        # user_favorites = self.driver.find_element_by_css_selector("*[pr-test='UserBookmarks']")[0].click()
 
         # btn = self.driver.find_element_by_css_selector("*[pr-test='AddToFavoriteButton']")
         # print(btn)
