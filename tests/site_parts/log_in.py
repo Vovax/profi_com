@@ -4,8 +4,7 @@ import time
 from utils.db_init import db_con, cur
 
 
-
-class Log_in (GeneralPart):
+class Log_in(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_name=config.LOG_IN['name']):
         super().__init__(driver)
@@ -18,7 +17,6 @@ class Log_in (GeneralPart):
         # print(elem.get('user_mail'))
         self.user_email = elem.get('user_mail')
         self.user_password = elem.get('user_pass')
-
 
     def __call__(self, *args, **kwargs):
         self.test_log_in()

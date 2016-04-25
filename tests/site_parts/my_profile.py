@@ -1,8 +1,6 @@
 from .general_part import GeneralPart
 import config
 import time
-from selenium.webdriver.common.keys import Keys
-import unittest
 
 
 class My_profile(GeneralPart):
@@ -22,14 +20,13 @@ class My_profile(GeneralPart):
     def __repr__(cls):
         return 'my_profile'
 
-    def test_my_profile(self, elem=0):
+    def test_my_profile(self):
 
         self.driver.find_elements_by_css_selector(self.get_division_xpath_my_profile)[0].click()
         time.sleep(2)
+
         user_header_name = self.driver.find_elements_by_css_selector("*[pr_test='UserProfile']")[0].text
-        # print(name)
         user_profile_name = self.driver.find_elements_by_css_selector("*[pr-test='UserProfiName']")[0].text
-        # print(profile_name)
 
         assert user_profile_name == user_header_name, "User header name {header_name} isn't equal to user profile " \
                                                       "name {profile_name}, page {page}"\
@@ -45,8 +42,8 @@ class My_profile(GeneralPart):
 
         edit_title = self.driver.find_elements_by_css_selector("*[pr-test='EditProfileTitle']")[0].text
 
-        assert edit_title == 'Edit profile', "Can't move to edit profile page {page}"\
-            .format(page=self.driver.current_url)
+        assert edit_title == 'Edit profile' or edit_title == 'Редагувати профіль',\
+            "Can't move to edit profile page {page}".format(page=self.driver.current_url)
 
     def test_saving_text_changes(self):
 
@@ -69,10 +66,8 @@ class My_profile(GeneralPart):
         assert text_input in self.driver.page_source, "Can't find changes {changes} after profile edition"\
             .format(changes=text_input)
 
-        print(text_input)
-
-        edit_profile = self.driver.find_elements_by_css_selector("*[pr_test='EditProfile']")
-        edit_profile[0].click()
+        self.driver.get(self.testing_page)
+        time.sleep(3)
 
 
 

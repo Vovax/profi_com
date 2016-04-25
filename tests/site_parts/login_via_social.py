@@ -4,7 +4,7 @@ import time
 from utils.db_init import db_con, cur
 
 
-class Logination(GeneralPart):
+class LogInViaSocial(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, user_name=config.USER['name']):
         super().__init__(driver)
@@ -26,7 +26,7 @@ class Logination(GeneralPart):
 
     @classmethod
     def __repr__(cls):
-        return 'logination'
+        return 'login_via_social'
 
     def test_google_login(self):
 

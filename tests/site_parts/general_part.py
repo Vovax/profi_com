@@ -4,7 +4,15 @@ import time
 
 class GeneralPart(object):
 
-    def __init__(self, driver):
+    def __init__(self, driver, email_confirm=config.CONFIRM['email'], keypass_confirm=config.CONFIRM['pass'],
+                 name_confirm=config.CONFIRM['name'], new_frame=config.SQUIRREL_FRAME,
+                 user_email=config.TEST_REGISTRATION['email'], reset_user_pass=config.RESET_USER['pass']):
+        self.frame = new_frame
+        self.confirm = email_confirm
+        self.keypass_confirm = keypass_confirm
+        self.name_confirm = name_confirm
+        self.user_email = user_email
+        self.reset_user_pass = reset_user_pass
         self.driver = driver
         self.get_division_xpath_log_in = self.division_xpath_log_in()
         self.get_division_xpath_log_out = self.division_xpath_log_out()
@@ -99,11 +107,53 @@ class GeneralPart(object):
             else:
                 return False
 
+    def squirell_mail_login(self):
+        self.driver.get(self.confirm)
 
+        name = self.driver.find_element_by_name('login_username')
+        name.send_keys(self.name_confirm)
+        time.sleep(2)
+        keypass = self.driver.find_element_by_name('secretkey')
+        keypass.send_keys(self.keypass_confirm)
+        time.sleep(2)
+        login = self.driver.find_element_by_xpath("//input[@value='Login']")
+        login.submit()
+        time.sleep(2)
 
+    def get_message_link(self):
 
+        self.driver.get(self.frame)
+        link = self.driver.find_elements_by_xpath("/html/body/form/table/tbody/tr[5]/td/table/tbody/tr/td/table/tbody/"
+                                                  "tr[2]/td[5]/b/a")
+        text = link[0].text
+        print(text)
+        message = link[0].get_attribute('href')
+        print(message)
 
+        # assert text == 'Confirm Your Account', "Can't find confirmation message {message}".format(message=message)
 
+        time.sleep(2)
+        link[0].click()
+
+        confirm_link = self.driver.find_elements_by_xpath(self.get_division_select_confirm_link)[0].get_attribute("href")
+        print(confirm_link)
+
+        self.driver.get(confirm_link)
+
+    def reset_pass_input(self):
+
+        email_input = self.driver.find_element_by_name('email')
+        email_input.send_keys(self.user_email)
+
+        pass_input = self.driver.find_element_by_name('password')
+        pass_input.send_keys(self.reset_user_pass)
+
+        rep_pass_input = self.driver.find_element_by_name('password1')
+        rep_pass_input.send_keys(self.reset_user_pass)
+
+        reset_btn = self.driver.find_elements_by_css_selector("*[pr-test='RegSubmit']")
+        reset_btn[0].click()
+        time.sleep(7)
 
 
 

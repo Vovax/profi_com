@@ -9,10 +9,10 @@ import time
 
 class Registration(GeneralPart):
 
-    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, new_frame=config.SQUIRREL_FRAME,
-                 email_confirm=config.CONFIRM['email'], keypass_confirm=config.CONFIRM['pass'],
-                 name_confirm=config.CONFIRM['name'], registration='Sign up',
-                 user_email=('iam@profi.ntaxa.com'), user_name=('how'), user_pass=('1')):
+    def __init__(self, driver=None, testing_page=config.PROFIREADER_URL,
+                 registration='Sign up',
+                 user_email=config.TEST_REGISTRATION['email'], user_name=config.TEST_REGISTRATION['name'],
+                 user_pass=config.TEST_REGISTRATION['pass']):
         super().__init__(driver)
         self.driver = driver
         self.testing_page = testing_page
@@ -20,10 +20,6 @@ class Registration(GeneralPart):
         self.user_email = user_email
         self.user_pass = user_pass
         self.registration = registration
-        self.confirm = email_confirm
-        self.keypass_confirm = keypass_confirm
-        self.name_confirm = name_confirm
-        self.frame = new_frame
 
     def __call__(self, *args, **kwargs):
         self.test_registration()
@@ -77,42 +73,6 @@ class Registration(GeneralPart):
 
         time.sleep(5)
 
-    def squirell_mail_login(self):
-        self.driver.get(self.confirm)
-
-        name = self.driver.find_element_by_name('login_username')
-        name.send_keys(self.name_confirm)
-        time.sleep(2)
-        keypass = self.driver.find_element_by_name('secretkey')
-        keypass.send_keys(self.keypass_confirm)
-        time.sleep(2)
-        login = self.driver.find_element_by_xpath("//input[@value='Login']")
-        login.submit()
-        time.sleep(2)
-
-    def get_message_link(self):
-
-        self.driver.get(self.frame)
-        link = self.driver.find_elements_by_xpath("/html/body/form/table/tbody/tr[5]/td/table/tbody/tr/td/table/tbody/"
-                                                  "tr[2]/td[5]/b/a")
-        text = link[0].text
-        print(text)
-        message = link[0].get_attribute('href')
-        print(message)
-
-        assert text == 'Confirm Your Account', "Can't find confirmation message {message}".format(message=message)
-
-        time.sleep(2)
-        link[0].click()
-
-        confirm_link = self.driver.find_elements_by_xpath(self.get_division_select_confirm_link)[0].get_attribute("href")
-        print(confirm_link)
-
-        # hello_user = self.driver.find_elements_by_css_selector("*[pr-test='HelloUser']").get_attribute("text")
-        # print(hello_user)
-
-        self.driver.get(confirm_link)
-
     def accept_licence(self):
 
         print('Hello,' + ' ' + self.user_name + '!')
@@ -121,12 +81,12 @@ class Registration(GeneralPart):
             "Can't find new user name {name} on page source {page}".format(name=self.user_name,
                                                                            page=self.driver.page_source)
 
-        confirmed = self.driver.find_elements_by_css_selector("*[pr-test='Confirmed']")[0].text
-        print(confirmed)
-        conf_text = 'You have confirmed your account successfully!'
+        # confirmed = self.driver.find_elements_by_css_selector("*[pr-test='Confirmed']")[0].text
+        # print(confirmed)
+        # conf_text = 'You have confirmed your account successfully!' or 'Ви успішно підтвердили свій аккаунт'
 
-        assert conf_text == confirmed or conf_text in self.driver.page_source, "Not Confirmed User {user}"\
-            .format(user=self.user_email)
+        # assert conf_text == confirmed or conf_text in self.driver.page_source, "Not Confirmed User {user}"\
+        #     .format(user=self.user_email)
 
         #Почніть звідси!
         self.driver.find_elements_by_css_selector("*[pr-test='ConfirmEmail']")[0].click()

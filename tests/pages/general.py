@@ -1,7 +1,7 @@
 from config import PROFIREADER_URL, WINDOW_SIZE
 from utils.email import SendEmail
 from ..site_parts.log_in import Log_in
-from ..site_parts.logination import Logination
+from ..site_parts.login_via_social import LogInViaSocial
 # from tests.pages.loged_in_user import Loged_in_user
 from ..site_parts.subscriptions import Subscriptions
 from ..site_parts.news import News
@@ -13,13 +13,14 @@ from ..site_parts.add_to_bookmarks import AddToBookmarks
 from ..site_parts.companies import Companies
 from ..site_parts.create_edit_new_company import Create_edit_new_company
 from ..site_parts.article_likes import ArticleLikes
+from ..site_parts.reset_password import ResetPassword
 
 
 class General(object):
 
-    dependences = ('logination', 'registration', 'log_in', 'my_profile', 'subscriptions', 'news', 'help_page',
-                   'loged_in_user', 'header', 'search_and_subscribe', 'add_to_bookmarks', 'article_likes', 'companies',
-                   'create_edit_new_company')
+    dependences = ('registration', 'reset_password', 'login_via_social', 'log_in', 'my_profile', 'subscriptions', 'news',
+                   'help_page', 'loged_in_user', 'header', 'search_and_subscribe', 'add_to_bookmarks', 'article_likes',
+                   'companies', 'create_edit_new_company')
 
     def __init__(self, dependences=dependences, driver=None, device='PC', testing_page=PROFIREADER_URL):
         # print('general')
@@ -36,7 +37,7 @@ class General(object):
         self.driver.implicitly_wait(3)
 
     def call_dependences(self, dependences):
-        classes = (Log_in, ArticleLikes, Help_page, AddToBookmarks, Create_edit_new_company, Companies, Subscriptions, Logination,  My_profile, News, Registration, Search_and_Subscribe)
+        classes = (Registration, ResetPassword, Log_in, Help_page, My_profile, ArticleLikes, AddToBookmarks, Create_edit_new_company, Companies, Subscriptions, LogInViaSocial, News, Search_and_Subscribe)
 
         [a() for a in map(lambda cls: cls(driver=self.driver),
                           filter(lambda cls: cls.__repr__() in dependences, classes))]
