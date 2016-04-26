@@ -22,7 +22,7 @@ class My_profile(GeneralPart):
 
     def test_my_profile(self):
 
-        self.driver.find_elements_by_css_selector(self.get_division_xpath_my_profile)[0].click()
+        self.click_header_menu_item(header_menu_item='UserProfile')
         time.sleep(2)
 
         user_header_name = self.driver.find_elements_by_css_selector("*[pr_test='UserProfile']")[0].text

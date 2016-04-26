@@ -97,6 +97,20 @@ class GeneralPart(object):
                 pr_news_or_mark_or_subs_click = pr_news_or_mark_or_subs
         pr_news_or_mark_or_subs_click.click()
 
+    def click_header_menu_item(self, header_menu_item='CompaniesList'):
+        pr_header_menu_item_click = None
+        for pr_header_menu_item in self.driver.find_elements_by_css_selector("*[pr_test"):
+            if header_menu_item in pr_header_menu_item.get_attribute('pr_test'):
+                pr_header_menu_item_click = pr_header_menu_item
+        pr_header_menu_item_click.click()
+
+    def click_file_manager_navigate(self, file_manager_navigate='UploadFile'):
+        pr_file_manager_navigate_click = None
+        for pr_file_manager_navigate in self.driver.find_elements_by_css_selector("*[pr-test"):
+            if file_manager_navigate in pr_file_manager_navigate.get_attribute('pr-test'):
+                pr_file_manager_navigate_click = pr_file_manager_navigate
+        pr_file_manager_navigate_click.click()
+
     def scroll_all(self, old_pos=0):
         while True:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
