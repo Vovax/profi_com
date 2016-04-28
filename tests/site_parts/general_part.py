@@ -187,6 +187,8 @@ class GeneralPart(object):
 
 
 
+
+
     # def click_my_profile_or_logout(self, profile_or_logout='profile'):
     #     href_click = None
     #     for href in self.driver.find_elements_by_css_selector("*[pr_test='LogOut']"):

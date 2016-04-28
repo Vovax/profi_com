@@ -7,7 +7,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-
 class FileManager(GeneralPart):
 
     def __init__(self, driver=None, testing_page=config.PROFIREADER_URL, company_name='Fest files'):
@@ -18,7 +17,7 @@ class FileManager(GeneralPart):
 
     def __call__(self, *args, **kwargs):
         self.test_file_manager()
-        # self.click()
+        self.create_folder()
 
     @classmethod
     def __repr__(cls):
@@ -34,20 +33,67 @@ class FileManager(GeneralPart):
         drop_down_item = self.driver.find_elements_by_css_selector("*[pr-test='DropDownMenuItem']")
         # own = self.driver.find_elements_by_xpath("//*[contains(text(),"+"'"+self.company_name+"'"+")]")
         print(drop_down_item)
-        # print(own)
-        # print(own[0].text)
 
         for item in drop_down_item:
             print(item.text)
-            own = item.text
+            if item.text == self.company_name:
+                item.click()
+                time.sleep(5)
+
+    def create_folder(self):
+        self.driver.find_elements_by_css_selector("*[pr-test='CreateFolder']")[0].click()
+        input_folder_name = self.driver.find_elements_by_css_selector("*[pr-test='InputFolderName']")
+        new_folder_name = ('new one')
+        input_folder_name[0].send_keys(new_folder_name)
+        time.sleep(3)
+        self.driver.find_elements_by_css_selector("*[pr-test='SubmitFolder']")[0].click()
+        time.sleep(5)
+
+        folder_title = self.driver.find_elements_by_css_selector("*[pr-test='FolderName']")[0].get_attribute('title')
+
+        assert new_folder_name in folder_title, "Can't find just created folder {folder}".format(folder=new_folder_name)
+
+        get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
+
+        new_folder_id = get_folders[0].get_attribute('id')
+        # print(new_folder_id)
+        # print(ids)
+
+        ids = self.folder_ids()
+        print(ids)
+        assert new_folder_id in ids, "Can't find just created folder {folder}".format(folder=new_folder_id)
+
+        self.delete_folder(new_folder_id)
+
+    def delete_folder(self, new_folder_id):
+
+        self.driver.find_elements_by_css_selector("*[pr-test='DeleteFolder']")[0].click()
+        time.sleep(3)
+        self.driver.find_elements_by_css_selector("*[pr-test='ConfirmRemove']")[0].click()
+        time.sleep(3)
+
+        self.folder_ids()
+
+        # assert new_folder_id not in ids, "Can't delete just created folder {folder}".format(folder=new_folder_id)
+
+    def folder_ids(self):
+
+        get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
+        ids = []
+        for folder in get_folders:
+            ids.append(folder.get_attribute('id'))
+            # print(ids)
+        return ids
 
 
 
+        # list = [id for id in get_folder_id]
+        # print(get_folder_id)
+        # for id in get_folder_id:
+        #     print(id)
+        #     time.sleep(5)
 
-
-
-
-
+        # assert get_folder_id
 
 
 
