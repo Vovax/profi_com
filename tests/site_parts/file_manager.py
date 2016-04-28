@@ -49,32 +49,52 @@ class FileManager(GeneralPart):
         self.driver.find_elements_by_css_selector("*[pr-test='SubmitFolder']")[0].click()
         time.sleep(5)
 
-        folder_title = self.driver.find_elements_by_css_selector("*[pr-test='FolderName']")[0].get_attribute('title')
-
-        assert new_folder_name in folder_title, "Can't find just created folder {folder}".format(folder=new_folder_name)
+        folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderName']")
+        folder_title = folders[0].get_attribute('title')
 
         get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
 
         new_folder_id = get_folders[0].get_attribute('id')
         # print(new_folder_id)
-        # print(ids)
+        # print(folder_title)
 
         ids = self.folder_ids()
-        print(ids)
+
         assert new_folder_id in ids, "Can't find just created folder {folder}".format(folder=new_folder_id)
 
+        for folder in get_folders:
+            print(folder.text)
+            if folder.text == new_folder_name:
+                folder.click()
+                
+        self.upload_img_into_folder(folders)
         self.delete_folder(new_folder_id)
+
+    def upload_img_into_folder(self, folders):
+
+        # folders[0].click()
+        time.sleep(3)
+        self.driver.find_elements_by_css_selector("*[pr-test='UploadFile']")[0].click()
+
+        select_img = self.driver.find_elements_by_css_selector("*[pr-test='SelectUpload']")
+        select_img[0].send_keys("/Users/apple/Desktop/test.jpg")
+        time.sleep(3)
+
+        self.driver.find_elements_by_css_selector("*[pr-test='UploadBtn']")[0].click()
+        time.sleep(3)
 
     def delete_folder(self, new_folder_id):
 
+        self.driver.find_elements_by_css_selector("*[pr-test='GoBackFolder']")[0].click()
+        time.sleep(3)
         self.driver.find_elements_by_css_selector("*[pr-test='DeleteFolder']")[0].click()
         time.sleep(3)
         self.driver.find_elements_by_css_selector("*[pr-test='ConfirmRemove']")[0].click()
         time.sleep(3)
 
-        self.folder_ids()
+        ids = self.folder_ids()
 
-        # assert new_folder_id not in ids, "Can't delete just created folder {folder}".format(folder=new_folder_id)
+        assert new_folder_id not in ids, "Can't delete just created folder {folder}".format(folder=new_folder_id)
 
     def folder_ids(self):
 
