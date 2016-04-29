@@ -32,7 +32,7 @@ class FileManager(GeneralPart):
 
         drop_down_item = self.driver.find_elements_by_css_selector("*[pr-test='DropDownMenuItem']")
         # own = self.driver.find_elements_by_xpath("//*[contains(text(),"+"'"+self.company_name+"'"+")]")
-        print(drop_down_item)
+        # print(drop_down_item)
 
         for item in drop_down_item:
             print(item.text)
@@ -49,14 +49,12 @@ class FileManager(GeneralPart):
         self.driver.find_elements_by_css_selector("*[pr-test='SubmitFolder']")[0].click()
         time.sleep(5)
 
-        folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderName']")
-        folder_title = folders[0].get_attribute('title')
+        # folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderName']")
+        # folder_title = folders[0].get_attribute('title')
 
         get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
 
         new_folder_id = get_folders[0].get_attribute('id')
-        # print(new_folder_id)
-        # print(folder_title)
 
         ids = self.folder_ids()
 
@@ -66,35 +64,58 @@ class FileManager(GeneralPart):
             print(folder.text)
             if folder.text == new_folder_name:
                 folder.click()
-                
-        self.upload_img_into_folder(folders)
-        self.delete_folder(new_folder_id)
 
-    def upload_img_into_folder(self, folders):
+                self.upload_img_into_folder(new_folder_id, get_folders)
+
+    def upload_img_into_folder(self, new_folder_id, get_folders):
 
         # folders[0].click()
         time.sleep(3)
         self.driver.find_elements_by_css_selector("*[pr-test='UploadFile']")[0].click()
 
         select_img = self.driver.find_elements_by_css_selector("*[pr-test='SelectUpload']")
-        select_img[0].send_keys("/Users/apple/Desktop/test.jpg")
+        full_path = "/Users/apple/Desktop/test.jpg"
+        select_img[0].send_keys(full_path)
         time.sleep(3)
 
         self.driver.find_elements_by_css_selector("*[pr-test='UploadBtn']")[0].click()
         time.sleep(3)
 
+                  
+
+
+        # self.copy_img()
+        # self.delete_folder(new_folder_id)
+
+    def copy_img(self):
+
+
+
+
     def delete_folder(self, new_folder_id):
 
         self.driver.find_elements_by_css_selector("*[pr-test='GoBackFolder']")[0].click()
         time.sleep(3)
-        self.driver.find_elements_by_css_selector("*[pr-test='DeleteFolder']")[0].click()
-        time.sleep(3)
-        self.driver.find_elements_by_css_selector("*[pr-test='ConfirmRemove']")[0].click()
-        time.sleep(3)
 
-        ids = self.folder_ids()
+        get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
+        new_folder_name = ('new one')
 
-        assert new_folder_id not in ids, "Can't delete just created folder {folder}".format(folder=new_folder_id)
+        for folder in get_folders:
+            print(folder.text)
+            if folder.text == new_folder_name:
+
+                actions = ActionChains(self.driver)
+                actions.context_click(folder).perform()
+                time.sleep(5)
+                re = self.driver.find_elements_by_link_text("remove")
+                re[0].click()
+                time.sleep(5)
+                self.driver.find_elements_by_css_selector("*[pr-test='ConfirmRemove']")[0].click()
+                time.sleep(3)
+
+                ids = self.folder_ids()
+
+                assert new_folder_id not in ids, "Can't delete just created folder {folder}".format(folder=new_folder_id)
 
     def folder_ids(self):
 
