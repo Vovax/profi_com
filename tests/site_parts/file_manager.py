@@ -74,23 +74,31 @@ class FileManager(GeneralPart):
         self.driver.find_elements_by_css_selector("*[pr-test='UploadFile']")[0].click()
 
         select_img = self.driver.find_elements_by_css_selector("*[pr-test='SelectUpload']")
-        full_path = "/Users/apple/Desktop/test.jpg"
-        select_img[0].send_keys(full_path)
+        select_img[0].send_keys("/Users/apple/Desktop/test.jpg")
         time.sleep(3)
 
         self.driver.find_elements_by_css_selector("*[pr-test='UploadBtn']")[0].click()
         time.sleep(3)
 
-                  
-
-
         # self.copy_img()
-        # self.delete_folder(new_folder_id)
-
-    def copy_img(self):
+        self.delete_folder(new_folder_id)
 
 
 
+    # def copy_img(self):
+    #     get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
+    #     actions = ActionChains(self.driver)
+    #     actions.context_click(get_folders).perform()
+    #     time.sleep(3)
+    #     copy = self.driver.find_elements_by_link_text("copy")
+    #     copy[0].click()
+    #     time.sleep(3)
+    #     actions = ActionChains(self.driver)
+    #     actions.context_click(get_folders).perform()
+    #     time.sleep(3)
+    #     paste = self.driver.find_elements_by_link_text("paste")
+    #     paste[0].click()
+    #     time.sleep(3)
 
     def delete_folder(self, new_folder_id):
 
