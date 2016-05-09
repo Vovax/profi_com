@@ -54,15 +54,16 @@ class FileManager(GeneralPart):
 
         get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
 
-        new_folder_id = get_folders[0].get_attribute('id')
-
-        ids = self.folder_ids()
-
-        assert new_folder_id in ids, "Can't find just created folder {folder}".format(folder=new_folder_id)
-
         for folder in get_folders:
             print(folder.text)
             if folder.text == new_folder_name:
+                new_folder_id = folder.get_attribute('id')
+                print(new_folder_id, '111111111')
+
+                ids = self.folder_ids()
+
+                assert new_folder_id in ids, "Can't find just created folder {folder}".format(folder=new_folder_id)
+
                 folder.click()
 
                 self.upload_img_into_folder(new_folder_id, get_folders)
@@ -121,9 +122,10 @@ class FileManager(GeneralPart):
                 self.driver.find_elements_by_css_selector("*[pr-test='ConfirmRemove']")[0].click()
                 time.sleep(3)
 
-                ids = self.folder_ids()
-
-                assert new_folder_id not in ids, "Can't delete just created folder {folder}".format(folder=new_folder_id)
+            ids = self.folder_ids()
+            print(new_folder_id, '2222222222')
+            print(ids)
+            assert new_folder_id not in ids, "Can't delete just created folder {folder}".format(folder=new_folder_id)
 
     def folder_ids(self):
 
@@ -131,7 +133,6 @@ class FileManager(GeneralPart):
         ids = []
         for folder in get_folders:
             ids.append(folder.get_attribute('id'))
-            # print(ids)
         return ids
 
 
