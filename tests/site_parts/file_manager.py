@@ -56,7 +56,8 @@ class FileManager(GeneralPart):
 
         for folder in get_folders:
             print(folder.text)
-            if folder.text == new_folder_name:
+            fld_name = folder.text
+            if fld_name == new_folder_name:
                 new_folder_id = folder.get_attribute('id')
                 print(new_folder_id, '111111111')
 
@@ -66,9 +67,9 @@ class FileManager(GeneralPart):
 
                 folder.click()
 
-                self.upload_img_into_folder(new_folder_id, get_folders)
+                self.upload_img_into_folder(new_folder_id, fld_name, folder)
 
-    def upload_img_into_folder(self, new_folder_id, get_folders):
+    def upload_img_into_folder(self, new_folder_id, fld_name, folder):
 
         # folders[0].click()
         time.sleep(3)
@@ -82,7 +83,7 @@ class FileManager(GeneralPart):
         time.sleep(3)
 
         # self.copy_img()
-        self.delete_folder(new_folder_id)
+        self.delete_folder(new_folder_id, fld_name, folder)
 
 
 
@@ -101,7 +102,7 @@ class FileManager(GeneralPart):
     #     paste[0].click()
     #     time.sleep(3)
 
-    def delete_folder(self, new_folder_id):
+    def delete_folder(self, new_folder_id, fld_name, folder):
 
         self.driver.find_elements_by_css_selector("*[pr-test='GoBackFolder']")[0].click()
         time.sleep(3)
@@ -109,18 +110,18 @@ class FileManager(GeneralPart):
         get_folders = self.driver.find_elements_by_css_selector("*[pr-test='FolderID']")
         new_folder_name = ('new one')
 
-        for folder in get_folders:
-            print(folder.text)
-            if folder.text == new_folder_name:
+        # for folder in get_folders:
+        #     # print(folder.text)
+        if fld_name == new_folder_name:
 
-                actions = ActionChains(self.driver)
-                actions.context_click(folder).perform()
-                time.sleep(5)
-                re = self.driver.find_elements_by_link_text("remove")
-                re[0].click()
-                time.sleep(5)
-                self.driver.find_elements_by_css_selector("*[pr-test='ConfirmRemove']")[0].click()
-                time.sleep(3)
+            actions = ActionChains(self.driver)
+            actions.context_click(folder).perform()
+            time.sleep(5)
+            re = self.driver.find_elements_by_link_text("remove")
+            re[0].click()
+            time.sleep(5)
+            self.driver.find_elements_by_css_selector("*[pr-test='ConfirmRemove']")[0].click()
+            time.sleep(3)
 
             ids = self.folder_ids()
             print(new_folder_id, '2222222222')
